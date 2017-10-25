@@ -1,0 +1,106 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="../templates/template.xhtml">
+
+	
+
+	<ui:define name="conteudo">
+		<h:form id="fprinc">
+					
+						<div  id="dform">
+								<div >
+								<h2>Processos</h2>
+							
+							<div class="Container100 Responsive100">
+								<p:fieldset>
+									<p:panelGrid columns="4" id="pg1" columnClasses="wd8, Wid25, wd8, wd25"   layout="grid" style="border:0px none;background:none">
+											
+											<h:outputText value="Beneficiário" />
+											 <p:autoComplete id="ac" value="#{processoBean.filtro_benef}" style="width:100%"  completeMethod="#{processoBean.complete}"
+ 						                       var="bn" itemLabel="#{bn.nome}" itemValue="#{bn}" converter="beneficiarioConverter" />
+ 
+ 											<h:outputText value="Insituto" />
+ 											<p:selectOneMenu value="#{processoBean.filtro_instituto}" converter="institutoConverter">
+ 												<f:selectItem itemLabel="Todos.." itemValue="#{null}"/>
+ 												<f:selectItems value="#{processoBean.institutos}" var="in" itemLabel="#{in.descricao}" itemValue="#{in}"/>
+ 											</p:selectOneMenu>
+ 											
+ 											<h:outputText value="Nº Processo" />
+ 											<p:inputText value="#{processoBean.filtro_nr_proc}"></p:inputText>
+ 											
+ 											
+ 											<h:outputText value="Status" />
+ 											<p:selectOneMenu value="#{processoBean.filtro_status}" >
+ 													<f:selectItem itemLabel="Todos" itemValue="9"/>
+ 													<f:selectItem itemLabel="Em Andamento" itemValue="0"/>
+ 													<f:selectItem itemLabel="Não Cump./Atrasado" itemValue="1"/>
+ 													<f:selectItem itemLabel="Cumprido" itemValue="2"/>
+ 											</p:selectOneMenu>
+ 											<h:outputText value="" />
+ 											<p:commandButton value="Pesquisar" action="#{processoBean.filtraProcessos}" update="fprinc"></p:commandButton>
+ 											<h:outputText value="" />
+ 											<p:commandButton value="(+) processo" action="#{processoBean.gotoNovoProcesso}" ></p:commandButton>
+									</p:panelGrid>
+								</p:fieldset>
+							</div>
+							
+							
+							<div class="Container100 Responsive100">
+								
+										<p:dataTable reflow="true" id="evs" var="ev" value="#{processoBean.processos}" selectionMode="single"  emptyMessage="nenhum evento Cadastrado" rowKey="#{ev.id}" selection="#{processoBean.processoSelected}">
+																		 <f:facet name="header">
+       Processos Cadastrados
+ 
+        <p:commandButton id="toggler" type="button" value="Colunas" style="float:right" icon="ui-icon-calculator" />
+        <p:columnToggler datasource="evs" trigger="toggler" />
+    </f:facet>
+							
+									<p:column headerText="Nº Processo"  filterBy="#{ev.nr_processo}" sortBy="#{ev.nr_processo}">
+										<h:outputText value="#{ev.nr_processo}" />
+										
+									</p:column>							
+							
+									<p:column headerText="Beneficiario"  filterBy="#{ev.beneficario.nome}" sortBy="#{ev.beneficario.nome}">
+										<h:outputText value="#{ev.beneficario.nome}" />
+										
+									</p:column>
+									
+									<p:column headerText="Instituto"  filterBy="#{ev.instituto.descricao}" sortBy="#{ev.instituto.descricao}">
+										<h:outputText value="#{ev.instituto.descricao}" />
+										
+									</p:column>
+									
+										<p:column headerText="Status" filterBy="#{ev.desc_status}" sortBy="#{ev.desc_status}">
+											<h:outputText value="#{ev.desc_status}" />
+										
+										</p:column>
+							
+									<p:column >
+									<p:commandButton value="Ver"  action="#{processoBean.colocaProcessoNaSessao}">
+										<f:setPropertyActionListener value="#{ev}" target="#{processoBean.processoSelected}" />
+									</p:commandButton>
+									</p:column>
+								
+								</p:dataTable>							
+								</div>
+								
+							</div>
+							        <hr/>
+						</div>
+					       
+						
+		                
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+									        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+									    </p:confirmDialog>
+		
+		</h:form>
+		
+		
+		
+		
+	</ui:define>
+</ui:composition>

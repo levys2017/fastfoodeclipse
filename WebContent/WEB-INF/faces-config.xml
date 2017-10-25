@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.1" xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+ <converter>
+  <converter-id>clienteConverter</converter-id>
+  <converter-class>br.com.levys.fastfood.util.ClienteConverter</converter-class>
+ </converter>
+ <converter>
+  <converter-id>contaConverter</converter-id>
+  <converter-class>br.com.levys.fastfood.util.ContaConverter</converter-class>
+ </converter>
+ <converter>
+  <converter-id>funcionarioConverter</converter-id>
+  <converter-class>br.com.levys.fastfood.util.FuncionarioConverter</converter-class>
+ </converter>
+ <converter>
+  <converter-id>produtoConverter</converter-id>
+  <converter-class>br.com.levys.fastfood.util.ProdutoConverter</converter-class>
+ </converter>
+</faces-config>

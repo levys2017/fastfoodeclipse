@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+ <session-factory name="">
+  <property name="show_sql">false</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+  <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+  <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+  <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/fastfood</property>
+  <property name="hibernate.connection.username">postgres</property>
+  <property name="hibernate.connection.password">12345</property>
+  <property name="hibernate.hbm2dll.auto">update</property>
+  <property name="hibernate.c3p0.max_size">10</property>
+  <property name="hibernate.c3p0.min_size">2</property>
+  <property name="hibernate.c3p0.timeout">5000</property>
+  <property name="hibernate.c3p0.max_statements">10</property>
+  <property name="hibernate.c3p0.idle_test_period">3000</property>
+  <property name="hibernate.c3p0.acquire_increment">2</property>
+  <mapping class="br.com.levys.fastfood.modelo.Cliente"/>
+  <mapping class="br.com.levys.fastfood.modelo.Conta"/>
+  <mapping class="br.com.levys.fastfood.modelo.Funcionario"/>
+  <mapping class="br.com.levys.fastfood.modelo.ItemPedido"/>
+  <mapping class="br.com.levys.fastfood.modelo.Localizacao"/>
+  <mapping class="br.com.levys.fastfood.modelo.Pedido"/>
+  <mapping class="br.com.levys.fastfood.modelo.Produto"/>
+  <mapping class="br.com.levys.fastfood.modelo.Usuario"/>
+ </session-factory>
+</hibernate-configuration>

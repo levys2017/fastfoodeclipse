@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="../templates/template.xhtml">
+
+	
+
+	<ui:define name="conteudo">
+		<h:form id="fprinc">
+					
+						<div  id="dform">
+								<div >
+								<h2>Status dos Andamentos</h2>
+							
+								<p:panelGrid columns="2" id="pg1" columnClasses="wd8, Wid60"   layout="grid" style="border:0px none;background:none">
+										<h:outputText value="Descrição:" />
+										<p:inputText value="#{statusAndamentoBean.statusAndamentoSelected.descricao}" style="width:100%"></p:inputText>					
+																						
+										<h:outputText value="Cor Fundo:" />
+										<p:inputText value="#{statusAndamentoBean.statusAndamentoSelected.cor}" style="width:100%"></p:inputText>					
+									
+										<h:outputText value="Cor Fonte:" />
+										<p:inputText value="#{statusAndamentoBean.statusAndamentoSelected.cor_fonte}" style="width:100%"></p:inputText>					
+									
+								</p:panelGrid>
+												
+								
+								
+																
+								
+								<h:panelGrid  id="pg5" columns="3" >
+										<p:commandButton value="Salvar" action="#{statusAndamentoBean.salvar}" update="pg1 pg5 dt1"></p:commandButton>
+										<p:commandButton value="Limpar" action="#{statusAndamentoBean.limpar}" update="pg1 pg5 dt1"></p:commandButton>
+										<p:commandButton value="Excluir" actionListener="#{statusAndamentoBean.excluir}" update="pg1 pg5  dt1" disabled="#{statusAndamentoBean.statusAndamentoSelected.id==0}">
+										   <p:confirm header="Confirmação" message="Deseja Excluir o Prazo?" icon="ui-icon-alert" />
+										</p:commandButton>
+									
+								</h:panelGrid>
+							
+								<p:dataTable id="dt1" var="bn" value="#{statusAndamentoBean.statusAndamento}" selectionMode="single" selection="#{statusAndamentoBean.statusAndamentoSelectedTable}" rowKey="#{bn.id}" rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15" emptyMessage="nenhum statusAndamento cadastrado" reflow="true">
+								
+									<p:ajax event="rowSelect" listener="#{statusAndamentoBean.selecionaRowTable}" update=":fprinc"></p:ajax>
+									
+									<p:column style="#{bn.estilo()}">
+										<h:outputText value="#{bn.descricao}" />
+									</p:column>
+									
+									<p:column headerText="Cor" style="#{bn.estilo()}">
+										<h:outputText value="#{bn.cor}" />
+									</p:column>
+									
+									
+													
+									
+								</p:dataTable>
+					
+							</div>
+							        <hr/>
+						</div>
+					       
+						
+		                
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+									        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+									    </p:confirmDialog>
+		
+		</h:form>
+		
+		
+		
+		
+	</ui:define>
+</ui:composition>
