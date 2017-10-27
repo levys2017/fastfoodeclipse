@@ -67,7 +67,7 @@ public class ProdutoBean implements Serializable{
 		}
 		else
 		{
-			FacesUtils.adicionaMensagemDeErro("não é possível salvar esse beneficiario");
+			FacesUtils.adicionaMensagemDeErro("não é possível salvar esse produto");
 		}
 	
 		}else{
@@ -94,7 +94,7 @@ public class ProdutoBean implements Serializable{
 		}
 		else
 		{
-			FacesUtils.adicionaMensagemDeErro("não é possível salvar esse beneficiario");
+			FacesUtils.adicionaMensagemDeErro("não é possível salvar esse produto");
 		}
 		}else{
 			FacesUtils.adicionaMensagemDeErro("você não possui permissão para efetuar essa operação");
@@ -118,15 +118,9 @@ public class ProdutoBean implements Serializable{
 	}
 
 
-	public void setProdutoSelected(Produto beneficiarioSelected) {
-		this.produtoSelected = beneficiarioSelected;
+	public void setProdutoSelected(Produto produtoSelected) {
+		this.produtoSelected = produtoSelected;
 	}
-
-
-
-
-
-
 
 
 	public Produto getProdutoSelectedTable() {
@@ -136,8 +130,8 @@ public class ProdutoBean implements Serializable{
 
 
 
-	public void setProdutoSelectedTable(Produto beneficiarioSelectedTable) {
-		this.produtoSelectedTable = beneficiarioSelectedTable;
+	public void setProdutoSelectedTable(Produto produtoSelectedTable) {
+		this.produtoSelectedTable = produtoSelectedTable;
 	}
 
 	public List<Produto> getProdutos() {

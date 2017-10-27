@@ -18,20 +18,15 @@ public class Cliente implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
+    private int     id;
 	@ManyToOne
 	@JoinColumn(name="login")
     private Usuario login;
-    private String nome;
-    private String cpf;
-    private Date dt_nasc;
-    private char sexo;
-    private String email;
-    private String telefone;
-    //private String senha; /* O sistema salva a senha do cart√£o?*/ n„o precisa de senha para compras online
-    private String n_cartao;
-    private Date dt_venc;
-    private char csv;
+    private String  nome;
+    private String  telefone;
+    private String  n_cartao;
+    private Date    dt_venc;
+    private String    csv;
     
   
    
@@ -43,38 +38,7 @@ public class Cliente implements Serializable{
         this.nome = nome;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public Date getDt_nasc() {
-        return dt_nasc;
-    }
-
-    public void setDt_nasc(Date dt_nasc) {
-        this.dt_nasc = dt_nasc;
-    }
-
-    public char getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(char sexo) {
-        this.sexo = sexo;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
+    
     public String getTelefone() {
         return telefone;
     }
@@ -101,14 +65,16 @@ public class Cliente implements Serializable{
         this.dt_venc = dt_venc;
     }
 
-    public char getCsv() {
-        return csv;
-    }
+    
 
-    public void setCsv(char csv) {
-        this.csv = csv;
-    }
 
+	public String getCsv() {
+		return csv;
+	}
+
+	public void setCsv(String csv) {
+		this.csv = csv;
+	}
 
 	public int getId() {
 		return id;

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt"
+xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="página de acompanhamento das rotinas de implantação do sistema mega"/>
+    <meta name="author" content="Edson Mesquita"/>
+
+    <title>..::FASTFOOD- CADASTRO::..</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    
+
+    <!-- Custom CSS -->
+ 
+    
+     <!-- Custom CSS -->
+    <link href="css/po.css" rel="stylesheet"/>
+    
+     <h:outputScript name="js/layout.js" library="sentinel-layout" />
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+</h:head>
+<h:body>
+
+		<div class="ContainerIndent ui-fluid" id="dform">
+					<div class="Container100 Responsive100">
+								<div class="row">
+											<div class="col-md-4 col-md-offset-4 text-center">
+												
+													<div >
+														<p:graphicImage url="img/logo.png"></p:graphicImage>
+													</div>
+													<h:form id="fprinc" >
+														<p:panelGrid rendered="#{clienteBean.jacadastrado==0}" columns="2" columnClasses="Wid8, Wid90" layout="grid" style="border:0px none;background:none" >
+															<h:outputText value="email:" />
+															<p:inputText value="#{clienteBean.email}"></p:inputText>
+															<h:outputText value="senha:" />
+															<p:password value="#{clienteBean.senha}" feedback="false"></p:password>
+															<p:column><p:commandLink value="primeiro acesso" action="#{clienteBean.atualizatela()}" update="fprinc"/></p:column>
+															<p:commandButton value="Entrar" action="#{clienteBean.loginCliente()}"></p:commandButton>
+														</p:panelGrid>
+														
+														
+														<p:panelGrid rendered="#{clienteBean.jacadastrado==1}" columns="2" columnClasses="Wid8, Wid90" layout="grid" style="border:0px none;background:none" >
+															<h:outputText value="email:" />
+															<p:inputText value="#{clienteBean.email}"></p:inputText>
+															<h:outputText value="nome:" />
+															<p:inputText value="#{clienteBean.nome}" feedback="false"></p:inputText>
+															
+															<h:outputText value="telefone:" />
+															<p:inputText value="#{clienteBean.telefone}" feedback="false"></p:inputText>
+														
+														<h:outputText value="Senha:" />
+															<p:password value="#{clienteBean.senha}" feedback="true" weakLabel="senha fraca" goodLabel="senha boa" strongLabel="senha forte"></p:password>
+														
+															<p:column><p:commandLink value="tenho cadastrado" action="#{clienteBean.atualizatela()}" update="fprinc"/></p:column>
+															<p:commandButton value="Cadastrar" action="#{clienteBean.cadastraCliente()}"></p:commandButton>
+														</p:panelGrid>
+													</h:form>
+												<p:messages autoUpdate="true"></p:messages>
+												<p:growl autoUpdate="true"></p:growl>
+											</div>
+								</div>
+					</div>
+</div>
+  
+</h:body>
+</html>

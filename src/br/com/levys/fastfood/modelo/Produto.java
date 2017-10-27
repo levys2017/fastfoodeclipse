@@ -29,8 +29,6 @@ public class Produto implements Serializable{
     private String imagem;
 
    
-   
-    
     
     public int getId() {
 		return id;

@@ -18,21 +18,11 @@ public class Usuario implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-    private String login;
     private String senha;
     private String email;
     private int perfil;//0 - cliente 1- funcionario 3 - master
-    private Date ultimo_login;
-    private String ip;
-
     
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
+    
 
     public String getSenha() {
         return senha;
