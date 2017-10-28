@@ -1,0 +1,64 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="templates/template2.xhtml">
+
+	 <title>..::FASTFOOD- CADASTRO::..</title>
+
+	<ui:define name="conteudo">
+		<h:form id="fprinc">
+					
+						<div  >
+						
+						<div style="align:center">
+									<h1>Faça Seu pedido</h1>						
+						</div>
+						
+							<p:dataScroller value="#{principalbean.produtos}" var="pd" chunkSize="10">
+							        <f:facet name="header">
+							            monte seu pedido
+							        </f:facet>
+							 
+							        <h:panelGrid columns="3" style="width:100%" columnClasses="wd20, wd60, wd20">
+							            <p:graphicImage   url="img/#{pd.imagem}" width="80" height="80"/> 
+							 
+							            <p:outputPanel>
+							                <h:panelGrid columns="2" cellpadding="5">
+							                    <h:outputText value="Nome:" />
+							                    <h:outputText value="#{pd.nome}" style="font-weight: bold"/>
+							 
+							                    <h:outputText value="VALOR:" />
+							                    <h:outputText value="#{pd.valor}" style="font-weight: bold">
+							                    
+							                    <f:convertNumber type="currency"></f:convertNumber>
+							 					</h:outputText>
+							                    <h:outputText value="Descrição:" />
+							                    <h:outputText value="#{pd.descricao}" style="font-weight: bold"/>
+							                </h:panelGrid>
+							            </p:outputPanel>
+							            <p:column>
+							            		<p:inputText  value="#{pd.qtd}"></p:inputText>
+							            		
+							            		<p:commandButton value=" + " action="#{principalbean.additem}">
+							            		
+							            			<f:setPropertyActionListener value="#{pd}" target="#{principalBean.produtoSelected}"></f:setPropertyActionListener>
+							            		</p:commandButton>
+							            </p:column>
+							            
+							        </h:panelGrid>
+							    </p:dataScroller>
+								
+							        <hr/>
+						</div>
+					       
+						
+		      
+		
+		</h:form>
+		
+		
+		
+		
+	</ui:define>
+</ui:composition>

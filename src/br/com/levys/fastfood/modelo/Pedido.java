@@ -68,6 +68,22 @@ public class Pedido implements Serializable{
     public void setValor_pago(double valor_pago) {
         this.valor_pago = valor_pago;
     }
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
    
     
 

@@ -4,27 +4,25 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" template="templates/template2.xhtml">
 
-	
+	 <title>..::FASTFOOD- CADASTRO::..</title>
 
 	<ui:define name="conteudo">
 		<h:form id="fprinc">
 					
-						<div  id="dform">
-								<div >
-								<h2>faça seu pedido</h2>
+						<div  >
+							<p:panelGrid columns="1">
 							
+									<p:commandButton value="Cardápio" action="#{menuBean.gotoCardapio}"></p:commandButton>	
+									<p:commandButton value="Meus pedidos" ></p:commandButton>	
+							
+							
+							</p:panelGrid>
 								
-					
-							</div>
 							        <hr/>
 						</div>
 					       
 						
-		                
-				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-									        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-									        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-									    </p:confirmDialog>
+		      
 		
 		</h:form>
 		

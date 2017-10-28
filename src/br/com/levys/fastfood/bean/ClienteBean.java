@@ -27,13 +27,27 @@ private static final long serialVersionUID = 1L;
 	private Cliente       clienteSelected       = new Cliente();
 	private Cliente       clienteSelectedTable  = new Cliente();
 	private int    jacadastrado;
-
+	private int contador;
 	
 	private String email, nome, telefone, senha;
 	
+
 	
+	public int getContador() {
+		return contador;
+	}
+
+	public void setContador(int contador) {
+		this.contador = 0;
+	}
 	
-	
+	public void adiciona() {
+		contador++;
+		
+	}
+	public void remove() {
+		contador--;
+	}
 	
 	
 	public void atualizatela() {
@@ -47,10 +61,6 @@ private static final long serialVersionUID = 1L;
 	}
 	
 	
-	
-	
-	
-	
 	public String loginCliente() {
 		String ret="#";
 		
@@ -60,7 +70,7 @@ private static final long serialVersionUID = 1L;
 			
 			if(new UsuarioDAO().Login(email, senha)!=null) {
 				
-				ret = "bemvindo?faces-redirect=true\"";
+				ret = "bemvindo?faces-redirect=true";
 			}else {
 				
 				FacesUtils.adicionaMensagemDeFatal("usuario e/ou senha inválidos");
@@ -259,13 +269,9 @@ private static final long serialVersionUID = 1L;
 
 
 
-
-
 	public String getNome() {
 		return nome;
 	}
-
-
 
 
 
@@ -275,14 +281,9 @@ private static final long serialVersionUID = 1L;
 
 
 
-
-
 	public String getTelefone() {
 		return telefone;
 	}
-
-
-
 
 
 	public void setTelefone(String telefone) {
@@ -290,15 +291,9 @@ private static final long serialVersionUID = 1L;
 	}
 
 
-
-
-
 	public String getSenha() {
 		return senha;
 	}
-
-
-
 
 
 	public void setSenha(String senha) {
@@ -306,15 +301,9 @@ private static final long serialVersionUID = 1L;
 	}
 
 
-
-
-
 	public int getJacadastrado() {
 		return jacadastrado;
 	}
-
-
-
 
 
 	public void setJacadastrado(int jacadastrado) {

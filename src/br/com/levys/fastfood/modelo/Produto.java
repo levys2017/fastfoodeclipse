@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Produto implements Serializable{
@@ -24,10 +25,13 @@ public class Produto implements Serializable{
     private Funcionario funcionario;
     private String nome;
     private String descricao;
-    private float valor;
+    private double valor;
     private String categoria;
     private String imagem;
-
+    
+    @Transient
+    private int  qtd;
+    
    
     
     public int getId() {
@@ -58,15 +62,20 @@ public class Produto implements Serializable{
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
 
-    public float getValor() {
-        return valor;
-    }
+    public double getValor() {
+		return valor;
+	}
 
-    public void setValor(float valor) {
+	public void setValor(double valor) {
+		this.valor = valor;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public void setValor(float valor) {
         this.valor = valor;
     }
 
@@ -84,6 +93,14 @@ public class Produto implements Serializable{
 
 	public void setImagem(String imagem) {
 		this.imagem = imagem;
+	}
+
+	public int getQtd() {
+		return qtd;
+	}
+
+	public void setQtd(int qtd) {
+		this.qtd = qtd;
 	}
     
     
