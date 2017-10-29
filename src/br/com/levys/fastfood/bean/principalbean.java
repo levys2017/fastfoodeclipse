@@ -159,7 +159,7 @@ public class principalbean implements Serializable{
 			
 			
 			
-			itensPedido.add(ip)		;	
+			itensPedido.add(ip);	
 			
 					
 			

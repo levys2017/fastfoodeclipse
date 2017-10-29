@@ -27,27 +27,8 @@ private static final long serialVersionUID = 1L;
 	private Cliente       clienteSelected       = new Cliente();
 	private Cliente       clienteSelectedTable  = new Cliente();
 	private int    jacadastrado;
-	private int contador;
 	
 	private String email, nome, telefone, senha;
-	
-
-	
-	public int getContador() {
-		return contador;
-	}
-
-	public void setContador(int contador) {
-		this.contador = 0;
-	}
-	
-	public void adiciona() {
-		contador++;
-		
-	}
-	public void remove() {
-		contador--;
-	}
 	
 	
 	public void atualizatela() {

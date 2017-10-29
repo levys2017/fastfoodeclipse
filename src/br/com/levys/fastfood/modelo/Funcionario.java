@@ -24,10 +24,10 @@ public class Funcionario implements Serializable {
 	private Usuario usuario;
     private String nome;
     private String cpf;
-    private char sexo;
+    private int sexo;
     private String email;
     private String telefone;
-    private String cargo;
+    private String cargo; //0 - cliente 1- Atendimento  2- Cozinha 3 - Diretoria
     private String funcao;
 
     public String getNome() {
@@ -46,11 +46,11 @@ public class Funcionario implements Serializable {
         this.cpf = cpf;
     }
 
-    public char getSexo() {
+    public int getSexo() {
         return sexo;
     }
 
-    public void setSexo(char sexo) {
+    public void setSexo(int sexo) {
         this.sexo = sexo;
     }
 

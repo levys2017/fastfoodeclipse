@@ -20,7 +20,7 @@
 							            monte seu pedido
 							        </f:facet>
 							 
-							        <h:panelGrid columns="3" style="width:100%" columnClasses="wd20, wd60, wd20">
+							        <h:panelGrid columns="3" style="width:100%" columnClasses="wd10, wd70, wd20">
 							            <p:graphicImage   url="img/#{pd.imagem}" width="80" height="80"/> 
 							 
 							            <p:outputPanel>
@@ -40,15 +40,18 @@
 							            <p:column>
 							            		<p:inputText  value="#{pd.qtd}"></p:inputText>
 							            		
-							            		<p:commandButton value=" + " action="#{principalbean.additem}">
+							            		<p:commandButton  align="right" value=" + " action="#{principalbean.additem}">
 							            		
 							            			<f:setPropertyActionListener value="#{pd}" target="#{principalBean.produtoSelected}"></f:setPropertyActionListener>
 							            		</p:commandButton>
+							            		<p:commandButton align="right" value=" - " action="#{principalbean.additem}"/>
 							            </p:column>
 							            
 							        </h:panelGrid>
+							        
 							    </p:dataScroller>
-								
+								<p:commandButton value="Cancelar" action="#{principalbean.additem}"/>
+							    <p:commandButton value="Finalizar" action="#{principalbean.additem}"/>
 							        <hr/>
 						</div>
 					       

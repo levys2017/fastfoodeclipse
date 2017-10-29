@@ -20,7 +20,7 @@ public class Usuario implements Serializable{
 	private int id;
     private String senha;
     private String email;
-    private int perfil;//0 - cliente 1- funcionario 3 - master
+    private int perfil;//0 - cliente 1- Atendimento  2- Cozinha 3 - Diretoria
     
     
 
