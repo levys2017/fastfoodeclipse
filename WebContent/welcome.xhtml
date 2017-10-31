@@ -44,14 +44,18 @@ xmlns="http://www.w3.org/1999/xhtml"
 													</div>
 													<h:form id="fprinc" >
 														<p:panelGrid rendered="#{clienteBean.jacadastrado==0}" columns="2" columnClasses="Wid8, Wid90" layout="grid" style="border:0px none;background:none" >
-															<h:outputText value="email:" />
+															<h:outputText value="Email:" />
 															<p:inputText value="#{clienteBean.email}"></p:inputText>
-															<h:outputText value="senha:" />
+															<h:outputText value="Senha:" />
 															<p:password value="#{clienteBean.senha}" feedback="false"></p:password>
-															<p:column><p:commandLink value="primeiro acesso" action="#{clienteBean.atualizatela()}" update="fprinc"/></p:column>
-															<p:commandButton value="Entrar" action="#{clienteBean.loginCliente()}"></p:commandButton>
+															
 														</p:panelGrid>
-														
+														<br/>
+														<p:commandButton value="Entrar" action="#{clienteBean.loginCliente()}"></p:commandButton>
+														<p:commandButton value="Cancelar" action="#{clienteBean.limpar}"></p:commandButton>
+														<br/>
+														<br/>
+														<p:column><p:commandLink value="Faça seu cadastro" action="#{clienteBean.atualizatela()}" update="fprinc"/></p:column>
 														
 														<p:panelGrid rendered="#{clienteBean.jacadastrado==1}" columns="2" columnClasses="Wid8, Wid90" layout="grid" style="border:0px none;background:none" >
 															<h:outputText value="email:" />

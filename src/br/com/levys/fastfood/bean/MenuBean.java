@@ -10,12 +10,6 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class MenuBean implements Serializable {
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * 
 	 */

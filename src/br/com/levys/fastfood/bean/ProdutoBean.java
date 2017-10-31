@@ -18,9 +18,6 @@ import br.com.levys.fastfood.util.VerificaPermissao;
 @ViewScoped
 public class ProdutoBean implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	

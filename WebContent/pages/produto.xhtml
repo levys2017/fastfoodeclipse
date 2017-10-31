@@ -18,7 +18,6 @@
 										<p:inputText value="#{produtoBean.produtoSelected.nome}" style="width:100%"></p:inputText>					
 								</p:panelGrid>
 							
-							
 								<p:panelGrid columns="2" id="pg2" columnClasses="wd8, Wid80"   layout="grid" style="border:0px none;background:none">
 										<h:outputText value="Descrição:" />
 										<p:inputText value="#{produtoBean.produtoSelected.descricao}" style="width:100%"></p:inputText>					
@@ -27,8 +26,9 @@
 								
 								<p:panelGrid columns="4" id="pg3" columnClasses="wd8,wd10,wd8,wd10"   layout="grid" style="border:0px none;background:none">
 									<h:outputText value="Valor:" />
-									<p:inputText value="R$#{produtoBean.produtoSelected.valor}" style="width:90%"></p:inputText>					
-									
+									<p:inputText value="#{produtoBean.produtoSelected.valor}" style="width:90%" >
+									<f:convertNumber pattern="#0.00"/>
+									</p:inputText>					
 									
 									<p:outputLabel value="Categoria: " />
             						<p:selectOneRadio  value="#{produtoBean.produtoSelected.categoria}" style="width:150px">
@@ -36,14 +36,20 @@
             							<f:selectItem  itemLabel="Lanches"  itemValue="L"></f:selectItem>
             							<f:selectItem  itemLabel="Pratos"  itemValue="P"></f:selectItem>
                						</p:selectOneRadio>
-           							  				 	</p:panelGrid> 
+           						</p:panelGrid>
+								
+								<p:panelGrid columns="2" id="pg4" columnClasses="wd8, Wid80"   layout="grid" style="border:0px none;background:none">
+										<h:outputText value="Imagem:"/>
+										<p:inputText value="#{produtoBean.produtoSelected.imagem}" style="width:30%"></p:inputText>					
+								</p:panelGrid> 
+								
 								
 						
 								
 								<h:panelGrid  id="pg5" columns="3" >
-										<p:commandButton value="Salvar" action="#{produtoBean.salvar}" update="pg1 pg2 pg3 pg5 dt1"></p:commandButton>
+										<p:commandButton value="Salvar" action="#{produtoBean.salvar}" update="pg1 pg2 pg3 pg4 dt1"></p:commandButton>
 										<p:commandButton value="Limpar" action="#{produtoBean.limpar}" update="fprinc"></p:commandButton>
-										<p:commandButton value="Excluir" actionListener="#{produtoBean.excluir}" update="pg1 pg2 pg3 pg5 dt1" disabled="#{beneficiarioBean.beneficiarioSelected.id==0}">
+										<p:commandButton value="Excluir" actionListener="#{produtoBean.excluir}" update="pg1 pg2 pg3 pg4 dt1" disabled="#{beneficiarioBean.beneficiarioSelected.id==0}">
 										   <p:confirm header="Confirmação" message="Deseja Excluir o Produto?" icon="ui-icon-alert" />
 										</p:commandButton>
 									
@@ -68,6 +74,7 @@
 																									
 									<p:column headerText="Categoria">
 										<h:outputText value="#{pd.categoria}" />
+
 									</p:column>
 									
 									

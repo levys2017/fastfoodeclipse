@@ -15,13 +15,13 @@
 									<h1>Faça Seu pedido</h1>						
 						</div>
 						
-							<p:dataScroller value="#{principalbean.produtos}" var="pd" chunkSize="10">
+							<p:dataScroller value="#{principalbean.produtos}"   var="pd" chunkSize="10">
 							        <f:facet name="header">
-							            monte seu pedido
+							            Monte seu pedido
 							        </f:facet>
 							 
 							        <h:panelGrid columns="3" style="width:100%" columnClasses="wd10, wd70, wd20">
-							            <p:graphicImage   url="img/#{pd.imagem}" width="80" height="80"/> 
+							            <p:graphicImage   url="img/#{pd.imagem}" width="90" height="80"/> 
 							 
 							            <p:outputPanel>
 							                <h:panelGrid columns="2" cellpadding="5">
@@ -50,6 +50,38 @@
 							        </h:panelGrid>
 							        
 							    </p:dataScroller>
+							    
+							    
+							  <p:dataGrid var="car" value="#{principalbean.produtos}" columns="3" layout="grid"
+        rows="12" paginator="true" id="p"
+        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+        rowsPerPageTemplate="6,12,16">
+ 
+        <f:facet name="header">
+           Faça Seu pedido
+        </f:facet>
+ 
+        <p:panel header="#{p.nome}" style="text-align:center">
+            <h:panelGrid columns="1" style="width:100%">
+                 <p:graphicImage   url="img/#{p.imagem}" width="90" height="80"/> 
+ 
+                <h:outputText value="#{p.valor}" >
+					<f:convertNumber type="currency"></f:convertNumber>
+				</h:outputText> 
+                <p:commandLink update=":fprinc:pDetail" oncomplete="PF('pDialog').show()" title="View Detail">
+                    <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
+                    <f:setPropertyActionListener value="#{p}" target="#{principalbean.produtoSelected}" />
+                </p:commandLink>
+            </h:panelGrid>
+        </p:panel>
+ 
+    </p:dataGrid>
+							    
+							    
+							    
+							    
+							    
+							    
 								<p:commandButton value="Cancelar" action="#{principalbean.additem}"/>
 							    <p:commandButton value="Finalizar" action="#{principalbean.additem}"/>
 							        <hr/>
@@ -58,7 +90,33 @@
 						
 		      
 		
+		
+		<p:dialog header="Item" widgetVar="pDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="pDetail" style="text-align:center;">
+            <p:panelGrid  columns="2" rendered="#{not empty principalBean.produtoSelected}" columnClasses="label,value">
+                <f:facet name="header">
+                    <p:graphicImage url="img/#{p.imagem}"/> 
+                </f:facet>
+ 
+                <h:outputText value="" />
+                <h:outputText value="#{p.nome}" />
+ 
+                <h:outputText value="valor" />
+                <h:outputText value="#{p.valor}" />
+ 
+                <h:outputText value="Desc." />
+                <h:outputText value="#{p.descricao}" />
+ 
+                
+            </p:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
+		
+		
+		
+		
 		</h:form>
+		
 		
 		
 		
