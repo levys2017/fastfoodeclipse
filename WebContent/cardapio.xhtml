@@ -14,51 +14,16 @@
 						<div style="align:center">
 									<h1>Faça Seu pedido</h1>						
 						</div>
-						
-							<p:dataScroller value="#{principalbean.produtos}"   var="pd" chunkSize="10">
-							        <f:facet name="header">
-							            Monte seu pedido
-							        </f:facet>
-							 
-							        <h:panelGrid columns="3" style="width:100%" columnClasses="wd10, wd70, wd20">
-							            <p:graphicImage   url="img/#{pd.imagem}" width="90" height="80"/> 
-							 
-							            <p:outputPanel>
-							                <h:panelGrid columns="2" cellpadding="5">
-							                    <h:outputText value="Nome:" />
-							                    <h:outputText value="#{pd.nome}" style="font-weight: bold"/>
-							 
-							                    <h:outputText value="VALOR:" />
-							                    <h:outputText value="#{pd.valor}" style="font-weight: bold">
-							                    
-							                    <f:convertNumber type="currency"></f:convertNumber>
-							 					</h:outputText>
-							                    <h:outputText value="Descrição:" />
-							                    <h:outputText value="#{pd.descricao}" style="font-weight: bold"/>
-							                </h:panelGrid>
-							            </p:outputPanel>
-							            <p:column>
-							            		<p:inputText  value="#{pd.qtd}"></p:inputText>
-							            		
-							            		<p:commandButton  align="right" value=" + " action="#{principalbean.additem}">
-							            		
-							            			<f:setPropertyActionListener value="#{pd}" target="#{principalBean.produtoSelected}"></f:setPropertyActionListener>
-							            		</p:commandButton>
-							            		<p:commandButton align="right" value=" - " action="#{principalbean.additem}"/>
-							            </p:column>
-							            
-							        </h:panelGrid>
-							        
-							    </p:dataScroller>
 							    
-							    
-							  <p:dataGrid var="car" value="#{principalbean.produtos}" columns="3" layout="grid"
-        rows="12" paginator="true" id="p"
+		<p:dataGrid var="p" value="#{principalbean.produtos}" columns="3" layout="grid"
+        rows="12" paginator="true" id="gp"
         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
         rowsPerPageTemplate="6,12,16">
  
         <f:facet name="header">
-           Faça Seu pedido
+           Faça Seu pedido ------Carrinho(#{principalbean.itensPedido.size()})  ----- Total Pedido  <h:outputText value=" #{principalbean.pedidoSelected.valor_total}"><f:convertNumber type="currency"></f:convertNumber> </h:outputText> 
+           
+           
         </f:facet>
  
         <p:panel header="#{p.nome}" style="text-align:center">
@@ -68,45 +33,69 @@
                 <h:outputText value="#{p.valor}" >
 					<f:convertNumber type="currency"></f:convertNumber>
 				</h:outputText> 
-                <p:commandLink update=":fprinc:pDetail" oncomplete="PF('pDialog').show()" title="View Detail">
+                <p:commandLink update=":fprinc:pDetail" onclick="PF('pDialog').show()" title="Detalhes">
                     <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
                     <f:setPropertyActionListener value="#{p}" target="#{principalbean.produtoSelected}" />
                 </p:commandLink>
+                
+                <p:commandLink update=":fprinc:tip :fprinc:gp"  title="Comprar" action="#{principalbean.additem}">
+                    <h:outputText value="Adicionar" style="margin:0 auto;" />
+                    <f:setPropertyActionListener value="#{p}" target="#{principalbean.produtoSelected}" />
+                </p:commandLink>
+                
             </h:panelGrid>
         </p:panel>
- 
+ 				
     </p:dataGrid>
 							    
-							    
-							    
-							    
-							    
-							    
-								<p:commandButton value="Cancelar" action="#{principalbean.additem}"/>
-							    <p:commandButton value="Finalizar" action="#{principalbean.additem}"/>
-							        <hr/>
+				<p:commandButton value="Cancelar" action="#{principalbean.limpar}" update="fprinc"/>
+				<p:commandButton value="Finalizar" action="#{principalbean.fecharPedido()}"/>
+							        
 						</div>
-					       
+						<div>
+						
+						<p:dataTable id="tip" var="it" value="#{principalbean.itensPedido}">
+									<p:column>
+											<h:outputText value="#{it.produto.nome}"></h:outputText>						
+									</p:column>
+									
+									
+									
+									<p:column>
+											<h:outputText value="#{it.produto.valor}">
+												<f:convertNumber type="currency"></f:convertNumber>										
+											</h:outputText>						
+									</p:column>
+									
+									<p:commandButton value="X" action="#{}">
+						</p:dataTable>
+						</div>					       
 						
 		      
 		
 		
 		<p:dialog header="Item" widgetVar="pDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
         <p:outputPanel id="pDetail" style="text-align:center;">
-            <p:panelGrid  columns="2" rendered="#{not empty principalBean.produtoSelected}" columnClasses="label,value">
+            <p:panelGrid  columns="2" rendered="#{principalbean.produtoSelected.id>0}" columnClasses="label,value">
                 <f:facet name="header">
-                    <p:graphicImage url="img/#{p.imagem}"/> 
+                    <p:graphicImage url="img/#{principalbean.produtoSelected.imagem}" width="90" height="80"/> 
                 </f:facet>
  
                 <h:outputText value="" />
-                <h:outputText value="#{p.nome}" />
+                <h:outputText value="#{principalbean.produtoSelected.nome}" />
  
                 <h:outputText value="valor" />
-                <h:outputText value="#{p.valor}" />
+                <h:outputText value="#{principalbean.produtoSelected.valor}" > 
+                		<f:convertNumber type="currency"></f:convertNumber>
+                </h:outputText>
  
                 <h:outputText value="Desc." />
-                <h:outputText value="#{p.descricao}" />
- 
+                <h:outputText value="#{principalbean.produtoSelected.descricao}" />
+		
+				<p:commandLink update=":fprinc:tip :fprinc:gp"  title="Comprar" action="#{principalbean.additem}">
+                    <h:outputText value="Adicionar" style="margin:0 auto;" />
+                    <f:setPropertyActionListener value="#{p}" target="#{principalbean.produtoSelected}" />
+                </p:commandLink>
                 
             </p:panelGrid>
         </p:outputPanel>

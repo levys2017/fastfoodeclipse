@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="templates/template2.xhtml">
+
+	 <title>..::FASTFOOD- CADASTRO::..</title>
+
+	<ui:define name="conteudo">
+		<h:form id="fprinc">
+					
+						<div  >
+						
+						<div style="align:center">
+									<h1>Finalize seu Pedido</h1>						
+						</div>
+						
+							
+							    
+							 
+							    
+							    
+							    
+							    
+							    
+								<p:commandButton value="Cancelar" action="#{principalbean.additem}"/>
+							    <p:commandButton value="Finalizar" action="#{principalbean.additem}"/>
+							        <hr/>
+						</div>
+						<div>
+						
+						<p:dataTable id="tip" var="it" value="#{principalbean.itensPedido}">
+									<p:column>
+											<h:outputText value="#{it.produto.nome}"></h:outputText>						
+									</p:column>
+									
+									
+									
+									<p:column>
+											<h:outputText value="#{it.produto.valor}">
+												<f:convertNumber type="currency"></f:convertNumber>										
+											</h:outputText>						
+									</p:column>
+									
+						</p:dataTable>
+						</div>					       
+						
+		      
+		
+		
+		<p:dialog header="Item" widgetVar="pDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="pDetail" style="text-align:center;">
+            <p:panelGrid  columns="2" rendered="#{principalbean.produtoSelected.id>0}" columnClasses="label,value">
+                <f:facet name="header">
+                    <p:graphicImage url="img/#{principalbean.produtoSelected.imagem}" width="90" height="80"/> 
+                </f:facet>
+ 
+                <h:outputText value="" />
+                <h:outputText value="#{principalbean.produtoSelected.nome}" />
+ 
+                <h:outputText value="valor" />
+                <h:outputText value="#{principalbean.produtoSelected.valor}" > 
+                		<f:convertNumber type="currency"></f:convertNumber>
+                </h:outputText>
+ 
+                <h:outputText value="Desc." />
+                <h:outputText value="#{principalbean.produtoSelected.descricao}" />
+                
+                <p:spinner></p:spinner>
+                
+ 
+                
+            </p:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
+		
+		
+		
+		
+		</h:form>
+		
+		
+		
+		
+		
+	</ui:define>
+</ui:composition>

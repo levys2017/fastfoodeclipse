@@ -32,6 +32,19 @@ public class Produto implements Serializable{
     @Transient
     private int  qtd;
     
+    
+    public void adic() {
+    	
+    	this.qtd++;
+    }    
+
+    
+
+    public void sub() {
+    	if(this.qtd>0) {
+    	this.qtd--;
+    	}
+    }    
    
     
     public int getId() {

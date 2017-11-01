@@ -1,7 +1,6 @@
 package br.com.levys.fastfood.modelo;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
 @Entity
 public class ItemPedido implements Serializable{
     
@@ -30,7 +30,7 @@ public class ItemPedido implements Serializable{
     private int Qtd;
     private String tipo;
     private Double sub_total;
-    private Date data;
+    private String data;
     private String hora;
 
     public int getId() {
@@ -65,11 +65,11 @@ public class ItemPedido implements Serializable{
         this.sub_total = sub_total;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 

@@ -1,6 +1,7 @@
 package br.com.levys.fastfood.modelo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
+import br.com.levys.fastfood.dao.PedidoDAO;
 
 @Entity
 public class Pedido implements Serializable{
@@ -27,6 +31,10 @@ public class Pedido implements Serializable{
     private String forma_pagamento;
     private int status;
     private double valor_pago;
+    
+    
+    @Transient
+    List<ItemPedido> itens;
 
 
     public int getSenha() {
@@ -84,7 +92,17 @@ public class Pedido implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	public List<ItemPedido> getItens() {
+		return itens;
+	}
    
+	
+	
+	public void buscaItens() {
+		
+		itens = new PedidoDAO().getAllbyPedido(this);
+	}
     
 
 }
