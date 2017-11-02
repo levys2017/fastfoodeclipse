@@ -54,7 +54,6 @@ public class principalbean implements Serializable{
 	 
 	 HttpSession sessions = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		
-		
 		if(sessions!=null) {
 		Pedido p= (Pedido) sessions.getAttribute("pedido");
 		
@@ -82,6 +81,7 @@ public class principalbean implements Serializable{
 	private void recarregaProduto(){
 		
 		produtos= new ProdutoDAO().getAllOrderAsc(Produto.class, "descricao");
+		
 	}
 	
 	public void salvar(){
@@ -111,15 +111,19 @@ public class principalbean implements Serializable{
 
 	
 	public void excluir(){
+		String ret = "";
 		if(new VerificaPermissao().isSupervisor()){
-		if(produtoSelected!=null && produtoSelected.getId()>0)
+		if(pedidoSelected!=null && pedidoSelected.getId()>0)
 		{
-			if(new ProdutoDAO().delete(produtoSelected))
+			if(new PedidoDAO().delete(pedidoSelected))
 			{
 				System.out.println("Operação realizada com sucesso!");
-				produtoSelected = new Produto();
+				pedidoSelected = new Pedido();
+				//ItemPedido ip = new ItemPedido();
 				
 				recarregaProduto();
+				itensPedido.clear();
+				ret = "cardapio? faces-redirect=true";
 			}
 			else
 			{
@@ -128,7 +132,7 @@ public class principalbean implements Serializable{
 		}
 		else
 		{
-			FacesUtils.adicionaMensagemDeErro("não é possível salvar esse produto");
+			FacesUtils.adicionaMensagemDeErro("Sem itens selecionados");
 		}
 		}else{
 			FacesUtils.adicionaMensagemDeErro("você não possui permissão para efetuar essa operação");
@@ -154,7 +158,7 @@ public class principalbean implements Serializable{
 		
 		return ret;
 	}
-
+	
 	
 	public void additem() {
 		if(pedidoSelected!=null && produtoSelected!=null) {
@@ -176,20 +180,32 @@ public class principalbean implements Serializable{
 				ip.setHora(hora);
 				ip.setPedido(pedidoSelected);
 				ip.setProduto(produtoSelected);
-				ip.setQtd(produtoSelected.getQtd());
+				//ip.setQtd(produtoSelected.getQtd());
 				//ip.setSub_total(ip.getQtd()*produtoSelected.getValor());
 				ip.setSub_total(produtoSelected.getValor());
 				ip.setTipo(produtoSelected.getCategoria());
-
 				
 			itensPedido.add(ip);	
 			recalculaPedido();
 			
-			System.out.println("Item adicionado!!!");		
-			
+			System.out.println("Item adicionado!!!");
+
 		}
 	}
 	
+	public void removeItem() {
+			
+			  for (int i = 0; i < itensPedido.size(); i++) {
+			    if (itensPedido.get(i).getProduto().equals(produtoSelected)) {
+			    	itensPedido.remove(i);
+			    
+			    	recalculaPedido();
+			    	System.out.println("Item removido!!!");
+			    	
+			    }
+			  }
+			}
+		
 	
 	private void recalculaPedido() {
 		
@@ -224,30 +240,6 @@ public class principalbean implements Serializable{
 		return ret;
 		
 	}
-	
-	public String apagarPedido() {
-		String ret ="#";
-			
-			if(itensPedido!=null) {
-				
-				for(ItemPedido ip: itensPedido) {
-					
-					new PedidoDAO().deletePedido(pedidoSelected, itensPedido);
-					
-					HttpSession sessions = (HttpSession) FacesContext.getCurrentInstance().getExternalContext()
-							.getSession(false);
-					
-					sessions.setAttribute("pedido", pedidoSelected);
-					ret = "#? faces-redirect=true";
-					limpar();
-				}
-				
-			}
-			
-			
-			return ret;
-			
-		}
 
 	
 	public void limpar(){
