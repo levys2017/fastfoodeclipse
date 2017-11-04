@@ -9,14 +9,17 @@
 	<ui:define name="conteudo">
 		<h:form id="fprinc">
 					
-						<div  >
+						<div >
 							<p:panelGrid columns="1">
 							
 								Bem-vindo 
-							
+							<center><h3>Status</h3>
+							<h:outputText value="#{principalbean.status()}"></h:outputText>
+    						<p:progressBar value="#{principalbean.pedidoSelected.status}" labelTemplate="{value}%" displayOnly="true" style="width:300px"/>
+    						</center>
 							</p:panelGrid>
 							
-						
+							
 						</div>
 					       
 						

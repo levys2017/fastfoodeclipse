@@ -43,19 +43,19 @@
                     <f:setPropertyActionListener value="#{p}" target="#{principalbean.produtoSelected}" />
                 </p:commandLink>
                 
-                <p:commandLink update=":fprinc:tip :fprinc:gp"  title="Comprar" action="#{principalbean.removeItem}">
-                    <h:outputText value="Remover" style="margin:0 auto;" />
-                    <f:setPropertyActionListener value="#{p}" target="#{principalbean.produtoSelected}" />
-                </p:commandLink>
-                
-                Qtd #{principalbean.produtos.size()}
+               
                 
             </h:panelGrid>
         </p:panel>
+        <f:facet name="footer">
+				<p:columnGroup>
+					 Total Pedido  <h:outputText value=" #{principalbean.pedidoSelected.valor_total}"><f:convertNumber type="currency"></f:convertNumber> </h:outputText>	
+				</p:columnGroup>        
+        </f:facet>
  				
     </p:dataGrid>
 							    
-				<p:commandButton value="Cancelar" action="#{principalbean.excluir()}" update="fprinc tip"/>
+				<p:commandButton value="Cancelar" action="#{principalbean.excluir()}" update="fprinc"/>
 				<p:commandButton value="Finalizar" action="#{principalbean.fecharPedido()}"/>
 							        
 
@@ -73,9 +73,6 @@
 											</h:outputText>						
 									</p:column>
 									
-									<p:column>
-										
-									</p:column>
 						</p:dataTable>
 						</div>					       
 						

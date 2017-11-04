@@ -25,7 +25,7 @@ public class Cliente implements Serializable{
     private String  nome;
     private String  telefone;
     private String  n_cartao;
-    private Date    dt_venc;
+    private String    dt_venc;
     private String    csv;
     
   
@@ -57,16 +57,18 @@ public class Cliente implements Serializable{
         this.n_cartao = n_cartao;
     }
 
-    public Date getDt_venc() {
-        return dt_venc;
-    }
-
-    public void setDt_venc(Date dt_venc) {
-        this.dt_venc = dt_venc;
-    }
+   
 
     
 
+
+	public String getDt_venc() {
+		return dt_venc;
+	}
+
+	public void setDt_venc(String dt_venc) {
+		this.dt_venc = dt_venc;
+	}
 
 	public String getCsv() {
 		return csv;

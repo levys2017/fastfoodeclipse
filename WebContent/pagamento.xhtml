@@ -1,0 +1,88 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="templates/template2.xhtml">
+
+	
+
+		 <title>..::FASTFOOD- CADASTRO::..</title>
+
+	<ui:define name="conteudo">
+		<h:form id="fprinc">
+					
+						<div>
+							<h2>Finalizar Pedido</h2>
+						</div>
+						
+						
+						
+						<h3>Total Pedido  <h:outputText value=" #{principalbean.pedidoSelected.valor_total}"><f:convertNumber type="currency"></f:convertNumber></h:outputText></h3>
+						
+						<p:separator></p:separator>
+						
+						
+						
+						<h3>Cliente  </h3>
+						
+						<p:separator></p:separator>
+					       
+					   
+						<p:panelGrid columns="2" id="pg1" columnClasses="wd20, wd80"   layout="grid" style="border:0px none;background:none">
+							<p:outputLabel value="Forma de Pagamento " />
+									<p:column>
+            							<p:selectOneRadio  value="#{principalbean.pedidoSelected.forma_pagamento}" >
+            								<f:selectItem  itemLabel="Dinheiro"  itemValue="1"></f:selectItem>
+            								<f:selectItem  itemLabel="Cartão de Crédito"  itemValue="2"></f:selectItem>
+            								<p:ajax event="change"  update="pg2 pg3"></p:ajax>
+            							</p:selectOneRadio>
+            							
+            							<p:commandButton value="atualizar" update="fprinc"></p:commandButton>
+            						</p:column>
+						</p:panelGrid>
+						
+						
+						
+						
+						
+						<p:panel rendered="#{principalbean.pedidoSelected.forma_pagamento == 2}" id="pg2">
+							<p:panelGrid    columns="2"  columnClasses="wd20, wd80"   layout="grid" style="border:0px none;background:none">
+									<h:outputText value="Numero do cartão"></h:outputText>
+									<p:inputMask value="#{principalbean.pedidoSelected.cliente.n_cartao}" mask="9999.9999.9999.9999"></p:inputMask>
+									
+									<h:outputText value="validade"></h:outputText>
+									<p:inputMask value="#{principalbean.pedidoSelected.cliente.dt_venc}" mask="99.9999"></p:inputMask>
+									
+									<h:outputText value="CSV"></h:outputText>
+									<p:inputMask value="#{principalbean.pedidoSelected.cliente.csv}" mask="999"></p:inputMask>
+									
+							</p:panelGrid>
+						
+						
+							<p:commandButton value="Finalizar" action="#{principalbean.gotoFecharContaCartao()}"/>
+						</p:panel>
+						
+						
+						
+						
+						<p:panel rendered="#{principalbean.pedidoSelected.forma_pagamento == 1}" id="pg3">
+						
+						
+						
+							<p:commandButton value="Finalizar" action="#{principalbean.gotoFecharContaDinheiro()}"/>
+						</p:panel>
+						
+						
+						
+						
+						
+						
+		      
+		
+		</h:form>
+		
+		
+		
+		
+	</ui:define>
+</ui:composition>

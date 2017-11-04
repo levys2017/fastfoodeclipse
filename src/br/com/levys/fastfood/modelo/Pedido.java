@@ -28,7 +28,7 @@ public class Pedido implements Serializable{
     private Cliente cliente;
     private int senha;
     private double valor_total;
-    private String forma_pagamento;
+    private int forma_pagamento;
     private int status;
     private double valor_pago;
     
@@ -53,11 +53,11 @@ public class Pedido implements Serializable{
         this.valor_total = valor_total;
     }
 
-    public String getForma_pagamento() {
+    public int getForma_pagamento() {
         return forma_pagamento;
     }
 
-    public void setForma_pagamento(String forma_pagamento) {
+    public void setForma_pagamento(int forma_pagamento) {
         this.forma_pagamento = forma_pagamento;
     }
 
