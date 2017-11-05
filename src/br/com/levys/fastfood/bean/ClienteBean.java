@@ -6,7 +6,9 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.servlet.http.HttpSession;
 
 import br.com.levys.fastfood.dao.ClienteDAO;
 import br.com.levys.fastfood.dao.UsuarioDAO;
@@ -28,7 +30,8 @@ private static final long serialVersionUID = 1L;
 	private Cliente       clienteSelectedTable  = new Cliente();
 	private int    jacadastrado;
 	
-	private String email, nome, telefone, senha;
+	private String email, nome, telefone, senha, n_cartao;
+	
 	
 	
 	public void atualizatela() {
@@ -44,7 +47,6 @@ private static final long serialVersionUID = 1L;
 	
 	public String loginCliente() {
 		String ret="#";
-		
 		
 		if(!email.isEmpty()&&!senha.isEmpty())
 		{
@@ -290,7 +292,18 @@ private static final long serialVersionUID = 1L;
 	public void setJacadastrado(int jacadastrado) {
 		this.jacadastrado = jacadastrado;
 	}
+
+
+	public String getN_cartao() {
+		return n_cartao;
+	}
+
+
+	public void setN_cartao(String n_cartao) {
+		this.n_cartao = n_cartao;
+	}
 	
+
 	
 	
 }

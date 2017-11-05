@@ -1,8 +1,6 @@
 package br.com.levys.fastfood.modelo;
 
 import java.io.Serializable;
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -56,11 +54,6 @@ public class Cliente implements Serializable{
     public void setN_cartao(String n_cartao) {
         this.n_cartao = n_cartao;
     }
-
-   
-
-    
-
 
 	public String getDt_venc() {
 		return dt_venc;

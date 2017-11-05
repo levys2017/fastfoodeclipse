@@ -10,31 +10,13 @@
 
 	<ui:define name="conteudo">
 		<h:form id="fprinc">
-					
-						<div>
-							<h2>Pedido concluído com suecesso</h2>
-						</div>
-					       
-					    <p:dataTable id="tip" var="it" value="#{principalbean.itensPedido}" selectionMode="single" selection="#{principalbean.produtoSelectedTable}" rowKey="#{it.id}"  emptyMessage="Nenhum item selecionado" reflow="true">
-							<p:ajax event="rowSelect" listener="#{principalbean.produtoSelectedTable}" update=":fprinc tip"></p:ajax>
-									<p:column>
-											<h:outputText value="#{it.produto.nome}"></h:outputText>						
-									</p:column>
-									
-									
-														
-									        <f:facet name="footer">
-				<p:columnGroup>
-					 Total Pedido  <h:outputText value=" #{principalbean.pedidoSelected.valor_total}"><f:convertNumber type="currency"></f:convertNumber> </h:outputText>	
-				</p:columnGroup>        
-        </f:facet>
-						</p:dataTable>
 						
 						
-				pagamento concluído seu pedido se encontra em preparo cód #{principalbean.pedidoSelected.id}
-						
-						
-						<p:commandButton value="Voltar" action="#{principalbean.gotoCardapio()}" update="fprinc tip"/>
+						<h3>Pagamento efetuado!!!</h3>
+						<p:separator></p:separator>
+						<h4>Código do Pedido: #{principalbean.pedidoSelected.id}</h4>
+						<h5>Total Pedido  <h:outputText value="R$ #{principalbean.pedidoSelected.valor_total}"><f:convertNumber type="currency"></f:convertNumber> </h:outputText></h5>
+						<p:commandButton value="Voltar" action="#{principalbean.gotobemvindo()}" update="fprinc"/>
 			
 						
 		      

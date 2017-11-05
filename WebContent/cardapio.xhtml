@@ -38,7 +38,7 @@
                     <f:setPropertyActionListener value="#{p}" target="#{principalbean.produtoSelected}" />
                 </p:commandLink>
                 
-                <p:commandLink update=":fprinc:tip :fprinc:gp"  title="Comprar" action="#{principalbean.additem}">
+                <p:commandLink update=":fprinc:gp"  title="Comprar" action="#{principalbean.additem}">
                     <h:outputText value="Adicionar" style="margin:0 auto;" />
                     <f:setPropertyActionListener value="#{p}" target="#{principalbean.produtoSelected}" />
                 </p:commandLink>
@@ -57,23 +57,7 @@
 							    
 				<p:commandButton value="Cancelar" action="#{principalbean.excluir()}" update="fprinc"/>
 				<p:commandButton value="Finalizar" action="#{principalbean.fecharPedido()}"/>
-							        
-
-						<p:dataTable id="tip" var="it" value="#{principalbean.itensPedido}" selectionMode="single" selection="#{principalbean.produtoSelectedTable}" rowKey="#{it.id}"  emptyMessage="Nenhum item selecionado" reflow="true">
-						<p:ajax event="rowSelect" listener="#{principalbean.produtoSelectedTable}" update=":fprinc tip"></p:ajax>
-									<p:column>
-											<h:outputText value="#{it.produto.nome}"></h:outputText>						
-									</p:column>
-									
-									
-									
-									<p:column>
-											<h:outputText value="#{it.produto.valor}">
-												<f:convertNumber type="currency"></f:convertNumber>										
-											</h:outputText>						
-									</p:column>
-									
-						</p:dataTable>
+		
 						</div>					       
 						
 		      

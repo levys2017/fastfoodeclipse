@@ -37,6 +37,7 @@ public class principalbean implements Serializable{
 	private Produto       produtoSelected = new Produto();
 	private Produto       produtoSelectedTable = new Produto();
 	private Pedido   	  pedidoSelected = new Pedido();
+	private Pedido   	  pedidoSelectedTable = new Pedido();
 	private List<ItemPedido> itensPedido = new ArrayList<ItemPedido>();
 	private Cliente clienteSelected = new Cliente();
 	private ItemPedido itemPedidoSelected = new ItemPedido();
@@ -46,12 +47,16 @@ public class principalbean implements Serializable{
 	public principalbean(){
 	produtos= new ProdutoDAO().getAllOrderAsc(Produto.class, "nome");
 	
-	clienteSelected = new ClienteDAO().getById(Cliente.class, 3, "id");////substituir pelo cliente logado
-	 produtoSelected = new Produto();
-	 
 	
+	HttpSession sessions = (HttpSession) FacesContext.getCurrentInstance().getExternalContext()
+			.getSession(true);
+	
+	sessions.setAttribute("cliente", clienteSelected);
+	
+	clienteSelected = new ClienteDAO().getById(Cliente.class, clienteSelected.getId(), "id");////substituir pelo cliente logado
+    produtoSelected = new Produto();
 	 
-	 
+
 	}
 	
 	public void selecionaRowTable(AjaxBehaviorEvent ae) {
@@ -61,8 +66,7 @@ public class principalbean implements Serializable{
 
 	}
 	
-	
-	
+
 	private void recarregaProduto(){
 		
 		produtos= new ProdutoDAO().getAllOrderAsc(Produto.class, "descricao");
@@ -208,7 +212,7 @@ public class principalbean implements Serializable{
 				new PedidoDAO().savePedido(pedidoSelected, itensPedido);
 				
 				HttpSession sessions = (HttpSession) FacesContext.getCurrentInstance().getExternalContext()
-						.getSession(true);
+						.getSession(false);
 				
 				sessions.setAttribute("pedido", pedidoSelected);
 				ret = "pedidocliente? faces-redirect=true";
@@ -246,7 +250,13 @@ public class principalbean implements Serializable{
 		return produtoSelectedTable;
 	}
 
+	public Pedido getPedidoSelectedTable() {
+		return pedidoSelectedTable;
+	}
 
+	public void setPedidoSelectedTable(Pedido pedidoSelectedTable) {
+		this.pedidoSelectedTable = pedidoSelectedTable;
+	}
 
 
 	public void setProdutoSelectedTable(Produto produtoSelectedTable) {
@@ -272,11 +282,32 @@ public class principalbean implements Serializable{
 	public String status(){
 		String status = "";
 				switch(pedidoSelected.getStatus()) { 
-				case 1: System.out.println("Aguardando pagamento...");
+				case 1: status = "Aguardando pagamento...";
+				break;
+				case 2: status = "Pagamento efetuado...";
+				break;
+				case 3: status = "Em preparo...";
+				break;
+				case 4: status = "Pronto!!!";
 				break;
 				default:status = "Faça seu pedido!!!";
 				break; 
 			}return status;
+	}
+			public int barrastatus(){
+				int status = 0;
+						switch(pedidoSelected.getStatus()) { 
+						case 1: status = 25;
+						break;
+						case 2: status = 50;
+						break;
+						case 3: status = 75;
+						break;
+						case 4: status = 100;
+						break;
+						default:status = 0;
+						break; 
+					}return status;		
 		
 	}
 	
@@ -307,6 +338,12 @@ public class principalbean implements Serializable{
 		return ret;
 	}
 	
+	public String gotoPedidoCliente() {
+		String ret="#";
+		ret = "pedidocliente? faces-redirect=true";
+		
+		return ret;
+	}
 	
 	
 	
@@ -333,24 +370,18 @@ public class principalbean implements Serializable{
 	public String gotoFecharContaCartao() {
 		String ret="#";
 		
-			pedidoSelected.setValor_pago(pedidoSelected.getValor_total());
-		
+		pedidoSelected.setValor_pago(pedidoSelected.getValor_total());
+		pedidoSelected.setStatus(2);
+			
 		new PedidoDAO().savePedido(pedidoSelected, itensPedido);
 		new ClienteDAO().save(pedidoSelected.getCliente());
 		
-			
-		
+
 		ret = "fimcartao? faces-redirect=true";
 		
 		return ret;
 	}
-	
-	
-	
-	
-	
-	
-	
+
 	public ItemPedido getItemPedidoSelected() {
 		return itemPedidoSelected;
 	}
