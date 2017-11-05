@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="templates/template2.xhtml">
+
+	
+
+	<ui:define name="conteudo">
+		<h:form id="fprinc">
+					
+						<div  id="dform">
+								<div>
+								<h2>Meu Perfil</h2>
+								<h4>Dados Pessoais</h4>
+								
+								<p:panelGrid columns="2" id="pg1" columnClasses="wd8, Wid80"   layout="grid" style="border:0px none;background:none">
+										<h:outputText value="*Nome:" />
+										<p:inputText value="#{clienteBean.clienteSelected.nome}" style="width:100%"></p:inputText>					
+										
+								</p:panelGrid>
+								
+								<p:panelGrid columns="4" id="pg2" columnClasses="wd8, wd25,wd8,wd20,"   layout="grid" style="border:0px none;background:none">
+											
+            						<h:outputText value="*Email:" />
+									<p:inputText value="#{clienteBean.clienteSelected.login.email}" style="width:100%"></p:inputText>					
+									
+									<h:outputText value="*Telefone:" />
+									<p:inputMask mask="(99)99999-9999" value="#{clienteBean.clienteSelected.telefone}" style="width:70%"></p:inputMask>	
+            					</p:panelGrid>
+            					
+            					<p:separator></p:separator>
+            					<h4>Dados do Cartão de Crédito</h4>
+            					
+            					<p:panelGrid columns="6" id="pg3" columnClasses="wd10, wd20,wd8,wd15,wd5,wd16"   layout="grid" style="border:0px none;background:none">
+            						<h:outputText value="Número do Cartão: " />
+            						<p:inputMask mask="9999.9999.9999.9999" value="#{clienteBean.clienteSelected.n_cartao}" style="width:100%"></p:inputMask>
+            						
+            						<h:outputText value="Data de Vencimento:" />
+    								<p:inputMask mask="99-9999" value="#{clienteBean.clienteSelected.dt_venc}" style="width:80%"></p:inputMask>
+
+    								<h:outputText value="CSC:" />
+    								<p:inputMask mask="999" value="#{clienteBean.clienteSelected.csv}" style="width:30%"></p:inputMask>
+            					</p:panelGrid>
+								
+								<h:panelGrid  id="pg8" columns="2" >
+										<p:commandButton value="Salvar" action="#{clienteBean.salvar}" update="fprinc"></p:commandButton>
+										<p:commandButton value="Voltar" action="#{principalbean.gotobemvindo()}" update="fprinc"></p:commandButton>
+									
+								</h:panelGrid>
+							
+								<p:dataTable id="dt1" var="bn" value="#{clienteBean.clientes}" selectionMode="single" selection="#{clienteBean.clienteSelectedTable}" rowKey="#{bn.id}" rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15" emptyMessage="Nenhum Funcionario Cadastrado" reflow="true">
+								
+									<p:ajax event="rowSelect" listener="#{clienteBean.selecionaRowTable}" update=":fprinc"></p:ajax>
+									<p:column headerText="Nome" filterBy="#{bn.nome}" sortBy="#{bn.nome}">
+										<h:outputText value="#{bn.nome}" />
+									</p:column>
+									
+			
+									
+									
+								</p:dataTable>
+					
+							</div>
+							        <hr/>
+						</div>
+					       
+						
+		                
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+									        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+									    </p:confirmDialog>
+		
+		</h:form>
+		
+		
+		
+		
+	</ui:define>
+</ui:composition>

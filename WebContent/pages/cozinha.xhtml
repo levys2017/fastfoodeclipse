@@ -20,31 +20,17 @@
 									<p:column headerText="Código" width="70">
 										<h:outputText value="#{p.id}"></h:outputText>						
 									</p:column>
-									<p:column headerText="Nome">
-										<h:outputText value="#{p.cliente.nome}"></h:outputText>						
+									<p:column headerText="Descrição">
+										<h:outputText value="#{principalbean.itemPedidoSelected.produto.descricao}"></h:outputText>						
 									</p:column>
-									<p:column headerText="Forma de Pagamento">
-										<h:outputText value="#{p.forma_pagamento}"></h:outputText>						
-									</p:column>
-									<p:column headerText="Valor Total" width="100">
-										<h:outputText value= "#{p.valor_total}"><f:convertNumber type="currency"></f:convertNumber></h:outputText>	
-									</p:column>
-									<p:column headerText="Valor Pago" width="100">
-										<h:outputText value= "#{p.valor_pago}"><f:convertNumber type="currency"></f:convertNumber></h:outputText>	
-									</p:column>
-									<p:column headerText="Status">
+
+									<p:column headerText="Status" width="200">
 										<h:outputText value= "#{principalbean.status()}"></h:outputText>	
 									</p:column>
 									
-									<p:column width="50">
-									     <p:commandLink update=":fprinc:pDetail" onclick="PF('pDialog').show()" title="Detalhes">
-						                 	<h:outputText styleClass="ui-icon ui-icon-search" style="margin:5 auto;" />
-						                    <f:setPropertyActionListener value="#{p}" target="#{principalbean.produtoSelected}" />
-						                </p:commandLink>
-						            </p:column>
-						            <p:column>  
-						           	<p:commandButton value="Alterar" action="#{principalbean.excluir()}"/>		    
-									<p:commandButton value="Remover" action="#{principalbean.fecharPedido()}"/>
+									<p:column width="200">  
+						           	<p:commandButton value="Aceitar" action="#{principalbean.aceitarPedido()}" update="tip"/>		    
+									<p:commandButton value="Finalizar" action="#{principalbean.finalizarPedido()}"/>
 						            
 									</p:column>
 										

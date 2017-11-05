@@ -56,14 +56,14 @@ private static final long serialVersionUID = 1L;
 				ret = "bemvindo?faces-redirect=true";
 			}else {
 				
-				FacesUtils.adicionaMensagemDeFatal("usuario e/ou senha inválidos");
+				FacesUtils.adicionaMensagemDeFatal("Usuario e/ou senha inválidos");
 			}
 			
 			
 			
 			
 		}else {
-			FacesUtils.adicionaMensagemDeAdvertencia("informe o email e a senha");
+			FacesUtils.adicionaMensagemDeAdvertencia("Informe o email e a senha");
 		}
 		
 		return ret;
@@ -92,14 +92,14 @@ private static final long serialVersionUID = 1L;
 					clienteSelected.setTelefone(telefone);
 					
 					if(new ClienteDAO().save(clienteSelected)) {
-						FacesUtils.adicionaMensagemDeInformacao("cadstro efetuado com sucesso");
+						FacesUtils.adicionaMensagemDeInformacao("Cadastro efetuado com sucesso");
 						ret = "bemvindo?faces-redirect=true";
 					}else {
 						new UsuarioDAO().delete(u);						
 					}
 					
 				}else {
-					FacesUtils.adicionaMensagemDeFatal("falha ao efeturar o cadastro, tente novamente mais tarde");
+					FacesUtils.adicionaMensagemDeFatal("Falha ao efeturar o cadastro, tente novamente mais tarde");
 				}
 				
 				
@@ -109,7 +109,7 @@ private static final long serialVersionUID = 1L;
 				
 			}else {
 				
-				FacesUtils.adicionaMensagemDeErro("esse email já está cadastrado");
+				FacesUtils.adicionaMensagemDeErro("Email já cadastrado");
 			}
 			
 			
@@ -119,7 +119,7 @@ private static final long serialVersionUID = 1L;
 			
 		}else {
 			
-			FacesUtils.adicionaMensagemDeAdvertencia("todos os campos são obrigatórios");
+			FacesUtils.adicionaMensagemDeAdvertencia("Todos os campos são obrigatórios");
 		}
 		
 		
@@ -166,11 +166,11 @@ private static final long serialVersionUID = 1L;
 		}
 		else
 		{
-			FacesUtils.adicionaMensagemDeErro("não é possível salvar esse cliente");
+			FacesUtils.adicionaMensagemDeErro("Não é possível salvar esse cliente");
 		}
 	
 		}else{
-			FacesUtils.adicionaMensagemDeErro("você não possui permissão para efetuar esta operação");
+			FacesUtils.adicionaMensagemDeErro("Você não possui permissão para efetuar esta operação");
 		}
 	}
 
@@ -193,10 +193,10 @@ private static final long serialVersionUID = 1L;
 		}
 		else
 		{
-			FacesUtils.adicionaMensagemDeErro("não é possível salvar esse cliente");
+			FacesUtils.adicionaMensagemDeErro("Não é possível salvar esse cliente");
 		}
 		}else{
-			FacesUtils.adicionaMensagemDeErro("você não possui permissão para efetuar essa operação");
+			FacesUtils.adicionaMensagemDeErro("Você não possui permissão para efetuar essa operação");
 			
 		}
 		

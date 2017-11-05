@@ -48,12 +48,7 @@ public class principalbean implements Serializable{
 	produtos= new ProdutoDAO().getAllOrderAsc(Produto.class, "nome");
 	
 	
-	HttpSession sessions = (HttpSession) FacesContext.getCurrentInstance().getExternalContext()
-			.getSession(true);
-	
-	sessions.setAttribute("cliente", clienteSelected);
-	
-	clienteSelected = new ClienteDAO().getById(Cliente.class, clienteSelected.getId(), "id");////substituir pelo cliente logado
+	clienteSelected = new ClienteDAO().getById(Cliente.class, 3, "id");////substituir pelo cliente logado
     produtoSelected = new Produto();
 	 
 
@@ -212,7 +207,7 @@ public class principalbean implements Serializable{
 				new PedidoDAO().savePedido(pedidoSelected, itensPedido);
 				
 				HttpSession sessions = (HttpSession) FacesContext.getCurrentInstance().getExternalContext()
-						.getSession(false);
+						.getSession(true);
 				
 				sessions.setAttribute("pedido", pedidoSelected);
 				ret = "pedidocliente? faces-redirect=true";
@@ -388,6 +383,25 @@ public class principalbean implements Serializable{
 
 	public void setItemPedidoSelected(ItemPedido itemPedidoSelected) {
 		this.itemPedidoSelected = itemPedidoSelected;
+	}
+	
+	public void aceitarPedido() {
+		if(pedidoSelected != null && pedidoSelected.getStatus() ==2) {
+			pedidoSelected.setStatus(3);
+		}else {
+			
+			System.out.println("Pedido inválido!! ");
+			  }
+	}
+	
+	public void finalizarPedido() {
+		if(pedidoSelected != null && pedidoSelected.getStatus() ==3) {
+			pedidoSelected.setStatus(4);
+		}else {
+			
+			System.out.println("Pedido inválido!! ");
+		}
+		
 	}
 	
 	

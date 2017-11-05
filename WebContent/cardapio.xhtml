@@ -21,23 +21,23 @@
         rowsPerPageTemplate="6,12,16">
  
         <f:facet name="header">
-           Faça Seu pedido ------Carrinho(#{principalbean.itensPedido.size()})  ----- Total Pedido  <h:outputText value=" #{principalbean.pedidoSelected.valor_total}"><f:convertNumber type="currency"></f:convertNumber> </h:outputText> 
+           Carrinho(#{principalbean.itensPedido.size()})  ----- Total Pedido  <h:outputText value=" #{principalbean.pedidoSelected.valor_total}"><f:convertNumber type="currency"></f:convertNumber> </h:outputText> 
            
            
         </f:facet>
  
         <p:panel header="#{p.nome}" style="text-align:center">
-            <h:panelGrid columns="1" style="width:100%">
+            <h:panelGrid columns="2" style="width:100%">
                  <p:graphicImage   url="img/#{p.imagem}" width="90" height="80"/> 
- 
-                <h:outputText value="#{p.valor}" >
+                
+                <h:outputText value="#{p.valor}" style="font-size:25px">
 					<f:convertNumber type="currency"></f:convertNumber>
-				</h:outputText> 
+				</h:outputText>
                 <p:commandLink update=":fprinc:pDetail" onclick="PF('pDialog').show()" title="Detalhes">
-                    <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
+                    <h:outputText value="Detalhes" style="margin:0 auto;" />
                     <f:setPropertyActionListener value="#{p}" target="#{principalbean.produtoSelected}" />
                 </p:commandLink>
-                
+               
                 <p:commandLink update=":fprinc:gp"  title="Comprar" action="#{principalbean.additem}">
                     <h:outputText value="Adicionar" style="margin:0 auto;" />
                     <f:setPropertyActionListener value="#{p}" target="#{principalbean.produtoSelected}" />
@@ -54,8 +54,8 @@
         </f:facet>
  				
     </p:dataGrid>
-							    
-				<p:commandButton value="Cancelar" action="#{principalbean.excluir()}" update="fprinc"/>
+				
+				<p:commandButton value="Cancelar" action="#{principalbean.excluir()}" update="fprinc"/>		    
 				<p:commandButton value="Finalizar" action="#{principalbean.fecharPedido()}"/>
 		
 						</div>					       
