@@ -23,7 +23,6 @@ public class Conta implements Serializable {
 	@JoinColumn(name="pedido")
     private Pedido pedido;
     private float valor;
-    private Date data;
   
 
     public float getValor() {
