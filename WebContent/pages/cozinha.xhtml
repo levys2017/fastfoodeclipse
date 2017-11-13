@@ -28,8 +28,8 @@
 										<h:outputText value= "#{principalbean.status()}"></h:outputText>	
 									</p:column>
 									
-									<p:column width="200">  
-						           	<p:commandButton value="Aceitar" action="#{principalbean.aceitarPedido()}" update="tip"/>		    
+									<p:column width="200" update="tip">  
+						           	<p:commandButton value="Aceitar" action="#{principalbean.aceitarPedido()}"/>		    
 									<p:commandButton value="Finalizar" action="#{principalbean.finalizarPedido()}"/>
 						            
 									</p:column>

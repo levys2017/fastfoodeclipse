@@ -31,6 +31,8 @@ public class Pedido implements Serializable{
     private int forma_pagamento;
     private int status;
     private double valor_pago;
+    private String data;
+	private String hora;
     
     
     @Transient
@@ -97,12 +99,24 @@ public class Pedido implements Serializable{
 		return itens;
 	}
    
-	
-	
 	public void buscaItens() {
 		
 		itens = new PedidoDAO().getAllbyPedido(this);
 	}
     
+	public String getData() {
+		return data;
+	}
 
+	public void setData(String data) {
+		this.data = data;
+	}
+
+	public String getHora() {
+		return hora;
+	}
+
+	public void setHora(String hora) {
+		this.hora = hora;
+	}
 }

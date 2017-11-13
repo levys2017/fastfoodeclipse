@@ -30,8 +30,7 @@ public class ItemPedido implements Serializable{
     private int Qtd;
     private String tipo;
     private Double sub_total;
-    private String data;
-    private String hora;
+
 
     public int getId() {
         return id;
@@ -63,22 +62,6 @@ public class ItemPedido implements Serializable{
 
     public void setSub_total(Double sub_total) {
         this.sub_total = sub_total;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-
-    public String getHora() {
-        return hora;
-    }
-
-    public void setHora(String hora) {
-        this.hora = hora;
     }
 
 	public Pedido getPedido() {

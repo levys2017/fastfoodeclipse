@@ -132,7 +132,16 @@ public class principalbean implements Serializable{
 			if(pedidoSelected==null)
 			{pedidoSelected = new Pedido();}
 			
+			Pedido p = new Pedido();
 			
+			Date date = new Date();
+			SimpleDateFormat d = new SimpleDateFormat("dd/MM/yyyy"); 
+			SimpleDateFormat h = new SimpleDateFormat("H:m:s");
+			String data = d.format(date);
+			String hora = h.format(date);
+			
+			pedidoSelected.setData(data);
+			pedidoSelected.setHora(hora);
 			pedidoSelected.setCliente(clienteSelected);
 			ret = new PedidoDAO().save(pedidoSelected);
 		
@@ -151,21 +160,11 @@ public class principalbean implements Serializable{
 
 				ItemPedido ip = new ItemPedido();
 				
-				Date date = new Date();
-				SimpleDateFormat d = new SimpleDateFormat("dd/MM/yyyy"); 
-				SimpleDateFormat h = new SimpleDateFormat("H:m:s");
-				String data = d.format(date);
-				String hora = h.format(date);
-				
-				ip.setData(data);
-				ip.setHora(hora);
 				ip.setPedido(pedidoSelected);
 				ip.setProduto(produtoSelected);
-				//ip.setQtd(produtoSelected.getQtd());
-				//ip.setSub_total(ip.getQtd()*produtoSelected.getValor());
 				ip.setSub_total(produtoSelected.getValor());
 				ip.setTipo(produtoSelected.getCategoria());
-				
+			
 			itensPedido.add(ip);	
 			recalculaPedido();
 			
@@ -206,10 +205,6 @@ public class principalbean implements Serializable{
 				pedidoSelected.setStatus(1);
 				new PedidoDAO().savePedido(pedidoSelected, itensPedido);
 				
-				HttpSession sessions = (HttpSession) FacesContext.getCurrentInstance().getExternalContext()
-						.getSession(true);
-				
-				sessions.setAttribute("pedido", pedidoSelected);
 				ret = "pedidocliente? faces-redirect=true";
 			}
 			
