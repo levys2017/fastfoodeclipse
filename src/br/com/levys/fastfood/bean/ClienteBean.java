@@ -24,92 +24,81 @@ public class ClienteBean implements Serializable{
 	
 private static final long serialVersionUID = 1L;
 
+private List<Cliente> clientes              = new ArrayList<Cliente>();
+private Cliente       clienteSelected       = new Cliente();
+private Cliente       clienteSelectedTable  = new Cliente();
+private int    jacadastrado;
+
+private String email, nome, telefone, senha, n_cartao;
+
+
+
+public void atualizatela() {
 	
-	private List<Cliente> clientes              = new ArrayList<Cliente>();
-	private Cliente       clienteSelected       = new Cliente();
-	private Cliente       clienteSelectedTable  = new Cliente();
-	private int    jacadastrado;
-	
-	private String email, nome, telefone, senha, n_cartao;
-	
-	
-	
-	public void atualizatela() {
-		
-		if(jacadastrado==0) {
-		jacadastrado = 1;
-		}else {
-			jacadastrado=0;
-		}
-		
+	if(jacadastrado==0) {
+	jacadastrado = 1;
+	}else {
+		jacadastrado=0;
 	}
 	
+}
+
+
+public String loginCliente() {
+	String ret="#";
 	
-	public String loginCliente() {
-		String ret="#";
+	if(!email.isEmpty()&&!senha.isEmpty())
+	{
 		
-		if(!email.isEmpty()&&!senha.isEmpty())
-		{
+		if(new UsuarioDAO().Login(email, senha)!=null) {
 			
-			if(new UsuarioDAO().Login(email, senha)!=null) {
-				
-				ret = "bemvindo?faces-redirect=true";
-			}else {
-				
-				FacesUtils.adicionaMensagemDeFatal("Usuario e/ou senha inválidos");
-			}
-			
-			
-			
-			
+			ret = "bemvindo?faces-redirect=true";
 		}else {
-			FacesUtils.adicionaMensagemDeAdvertencia("Informe o email e a senha");
+			
+			FacesUtils.adicionaMensagemDeFatal("Usuario e/ou senha inválidos");
 		}
 		
-		return ret;
 		
 		
 		
+	}else {
+		FacesUtils.adicionaMensagemDeAdvertencia("Informe o email e a senha");
 	}
 	
-	public String cadastraCliente() {
+	return ret;
+	
+	
+	
+}
+
+public String cadastraCliente() {
+	
+	String ret="#";
+	if(!nome.isEmpty()&&!email.isEmpty()&&!telefone.isEmpty()&&!senha.isEmpty()) {
 		
-		String ret="#";
-		if(!nome.isEmpty()&&!email.isEmpty()&&!telefone.isEmpty()&&!senha.isEmpty()) {
+		if(new UsuarioDAO().getAllbyEmail(email)==null) {
 			
-			if(new UsuarioDAO().getAllbyEmail(email)==null) {
+			
+			Usuario u = new Usuario();
+			u.setEmail(email);
+			u.setPerfil(0);
+			u.setSenha(senha);
+			
+			if(new UsuarioDAO().save(u)) {
+				clienteSelected = new Cliente();
+				clienteSelected.setLogin(u);
+				clienteSelected.setNome(nome);
+				clienteSelected.setTelefone(telefone);
 				
-				
-				Usuario u = new Usuario();
-				u.setEmail(email);
-				u.setPerfil(0);
-				u.setSenha(senha);
-				
-				if(new UsuarioDAO().save(u)) {
-					clienteSelected = new Cliente();
-					clienteSelected.setLogin(u);
-					clienteSelected.setNome(nome);
-					clienteSelected.setTelefone(telefone);
-					
-					if(new ClienteDAO().save(clienteSelected)) {
-						FacesUtils.adicionaMensagemDeInformacao("Cadastro efetuado com sucesso");
-						ret = "bemvindo?faces-redirect=true";
-					}else {
-						new UsuarioDAO().delete(u);						
-					}
-					
+				if(new ClienteDAO().save(clienteSelected)) {
+					FacesUtils.adicionaMensagemDeInformacao("Cadastro efetuado com sucesso");
+					ret = "bemvindo?faces-redirect=true";
 				}else {
-					FacesUtils.adicionaMensagemDeFatal("Falha ao efeturar o cadastro, tente novamente mais tarde");
+					new UsuarioDAO().delete(u);						
 				}
 				
-				
-				
-				
-				
-				
 			}else {
-				
-				FacesUtils.adicionaMensagemDeErro("Email já cadastrado");
+				FacesUtils.adicionaMensagemDeFatal("Falha ao efeturar o cadastro, tente novamente mais tarde");
 			}
 			
 			
@@ -119,191 +108,201 @@ private static final long serialVersionUID = 1L;
 			
 		}else {
 			
-			FacesUtils.adicionaMensagemDeAdvertencia("Todos os campos são obrigatórios");
+			FacesUtils.adicionaMensagemDeErro("Email já cadastrado");
 		}
 		
 		
-		return ret;
 		
+		
+		
+		
+	}else {
+		
+		FacesUtils.adicionaMensagemDeAdvertencia("Todos os campos são obrigatórios");
 	}
 	
 	
+	return ret;
 	
+}
+
+
+
+
+
+public ClienteBean(){
+clientes = new ClienteDAO().getAllOrderAsc(Cliente.class, "nome");
 	
+}
+
+public void selecionaRowTable(AjaxBehaviorEvent ae) {
+	if (clienteSelectedTable != null) {
+		clienteSelected = clienteSelectedTable;
+	}
+
+}
+
+
+private void recarregaCliente(){
 	
-	public ClienteBean(){
 	clientes = new ClienteDAO().getAllOrderAsc(Cliente.class, "nome");
-		
-	}
-	
-	public void selecionaRowTable(AjaxBehaviorEvent ae) {
-		if (clienteSelectedTable != null) {
-			clienteSelected = clienteSelectedTable;
-		}
+}
 
-	}
-	
-	
-	private void recarregaCliente(){
-		
-		clientes = new ClienteDAO().getAllOrderAsc(Cliente.class, "nome");
-	}
-	
-	public void salvar(){
-		if(new VerificaPermissao().isSupervisor()){
-		if(clienteSelected!=null)
+public void salvar(){
+	if(new VerificaPermissao().isSupervisor()){
+	if(clienteSelected!=null)
+	{
+		if(new ClienteDAO().save(clienteSelected))
 		{
-			if(new ClienteDAO().save(clienteSelected))
-			{
-				System.out.println("Operação realizada com sucesso!");
-				clienteSelected = new Cliente();
-				recarregaCliente();
-			}
-			else
-			{
-				System.out.println("Falha ao realizar a operação");
-			}
+			System.out.println("Operação realizada com sucesso!");
+			clienteSelected = new Cliente();
+			recarregaCliente();
 		}
 		else
 		{
-			FacesUtils.adicionaMensagemDeErro("Não é possível salvar esse cliente");
-		}
-	
-		}else{
-			FacesUtils.adicionaMensagemDeErro("Você não possui permissão para efetuar esta operação");
+			System.out.println("Falha ao realizar a operação");
 		}
 	}
+	else
+	{
+		FacesUtils.adicionaMensagemDeErro("Não é possível salvar esse cliente");
+	}
 
-	
-	public void excluir(){
-		if(new VerificaPermissao().isSupervisor()){
-		if(clienteSelected!=null && clienteSelected.getId()>0)
+	}else{
+		FacesUtils.adicionaMensagemDeErro("Você não possui permissão para efetuar esta operação");
+	}
+}
+
+
+public void excluir(){
+	if(new VerificaPermissao().isSupervisor()){
+	if(clienteSelected!=null && clienteSelected.getId()>0)
+	{
+		if(new ClienteDAO().delete(clienteSelected))
 		{
-			if(new ClienteDAO().delete(clienteSelected))
-			{
-				System.out.println("Operação realizada com sucesso!");
-				clienteSelected = new Cliente();
-				
-				recarregaCliente();
-			}
-			else
-			{
-				System.out.println("Falha ao realizar a operação");
-			}
-		}
-		else
-		{
-			FacesUtils.adicionaMensagemDeErro("Não é possível salvar esse cliente");
-		}
-		}else{
-			FacesUtils.adicionaMensagemDeErro("Você não possui permissão para efetuar essa operação");
+			System.out.println("Operação realizada com sucesso!");
+			clienteSelected = new Cliente();
 			
+			recarregaCliente();
 		}
+		else
+		{
+			System.out.println("Falha ao realizar a operação");
+		}
+	}
+	else
+	{
+		FacesUtils.adicionaMensagemDeErro("Não é possível salvar esse cliente");
+	}
+	}else{
+		FacesUtils.adicionaMensagemDeErro("Você não possui permissão para efetuar essa operação");
 		
 	}
-
 	
-	public void limpar(){
-		
-		clienteSelected = new Cliente();
-		clienteSelectedTable = new Cliente();
-		
-	}
+}
 
 
-	public Cliente getClienteSelected() {
-		return clienteSelected;
-	}
-
-
-	public void setClienteSelected(Cliente clienteSelected) {
-		this.clienteSelected = clienteSelected;
-	}
-
-
-	public Cliente getClienteSelectedTable() {
-		return clienteSelectedTable;
-	}
-
-
-	public void setClienteSelectedTable(Cliente clienteSelectedTable) {
-		this.clienteSelectedTable = clienteSelectedTable;
-	}
-
-	public List<Cliente> getClientes() {
-		return clientes;
-	}
-
-
-
-
-
-	public String getEmail() {
-		return email;
-	}
-
-
-
-
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-
-
-	public String getNome() {
-		return nome;
-	}
-
-
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
-
-	public String getSenha() {
-		return senha;
-	}
-
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-
-	public int getJacadastrado() {
-		return jacadastrado;
-	}
-
-
-	public void setJacadastrado(int jacadastrado) {
-		this.jacadastrado = jacadastrado;
-	}
-
-
-	public String getN_cartao() {
-		return n_cartao;
-	}
-
-
-	public void setN_cartao(String n_cartao) {
-		this.n_cartao = n_cartao;
-	}
+public void limpar(){
 	
+	clienteSelected = new Cliente();
+	clienteSelectedTable = new Cliente();
+	
+}
 
-	
-	
+
+public Cliente getClienteSelected() {
+	return clienteSelected;
+}
+
+
+public void setClienteSelected(Cliente clienteSelected) {
+	this.clienteSelected = clienteSelected;
+}
+
+
+public Cliente getClienteSelectedTable() {
+	return clienteSelectedTable;
+}
+
+
+public void setClienteSelectedTable(Cliente clienteSelectedTable) {
+	this.clienteSelectedTable = clienteSelectedTable;
+}
+
+public List<Cliente> getClientes() {
+	return clientes;
+}
+
+
+
+
+
+public String getEmail() {
+	return email;
+}
+
+
+
+
+
+public void setEmail(String email) {
+	this.email = email;
+}
+
+
+
+public String getNome() {
+	return nome;
+}
+
+
+
+public void setNome(String nome) {
+	this.nome = nome;
+}
+
+
+
+public String getTelefone() {
+	return telefone;
+}
+
+
+public void setTelefone(String telefone) {
+	this.telefone = telefone;
+}
+
+
+public String getSenha() {
+	return senha;
+}
+
+
+public void setSenha(String senha) {
+	this.senha = senha;
+}
+
+
+public int getJacadastrado() {
+	return jacadastrado;
+}
+
+
+public void setJacadastrado(int jacadastrado) {
+	this.jacadastrado = jacadastrado;
+}
+
+
+public String getN_cartao() {
+	return n_cartao;
+}
+
+
+public void setN_cartao(String n_cartao) {
+	this.n_cartao = n_cartao;
+}
+
+
+
+
 }

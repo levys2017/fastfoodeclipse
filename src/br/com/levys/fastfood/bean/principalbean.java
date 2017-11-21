@@ -15,10 +15,12 @@ import javax.servlet.http.HttpSession;
 import br.com.levys.fastfood.dao.ClienteDAO;
 import br.com.levys.fastfood.dao.PedidoDAO;
 import br.com.levys.fastfood.dao.ProdutoDAO;
+import br.com.levys.fastfood.dao.UsuarioDAO;
 import br.com.levys.fastfood.modelo.Cliente;
 import br.com.levys.fastfood.modelo.ItemPedido;
 import br.com.levys.fastfood.modelo.Pedido;
 import br.com.levys.fastfood.modelo.Produto;
+import br.com.levys.fastfood.modelo.Usuario;
 import br.com.levys.fastfood.util.FacesUtils;
 import br.com.levys.fastfood.util.VerificaPermissao;
 
@@ -41,22 +43,33 @@ public class principalbean implements Serializable{
 	private List<ItemPedido> itensPedido = new ArrayList<ItemPedido>();
 	private Cliente clienteSelected = new Cliente();
 	private ItemPedido itemPedidoSelected = new ItemPedido();
+	private ItemPedido itemPedidoSelectedTable = new ItemPedido();
 	
-	
+	private List<Cliente> clientes              = new ArrayList<Cliente>();
+	private Cliente       clienteSelectedTable  = new Cliente();
+	private int    jacadastrado;
+	private String email, nome, telefone, senha, n_cartao;
+	private List<Pedido> pedidos = new ArrayList<Pedido>();
 	
 	public principalbean(){
 	produtos= new ProdutoDAO().getAllOrderAsc(Produto.class, "nome");
 	
-	
-	clienteSelected = new ClienteDAO().getById(Cliente.class, 3, "id");////substituir pelo cliente logado
     produtoSelected = new Produto();
-	 
-
+  
+	
 	}
 	
 	public void selecionaRowTable(AjaxBehaviorEvent ae) {
 		if (produtoSelectedTable != null) {
 			produtoSelected = produtoSelectedTable;
+		}
+
+	}
+	
+	
+	public void selecionaRowItemTable(AjaxBehaviorEvent ae) {
+		if (itemPedidoSelectedTable != null) {
+			itemPedidoSelected = itemPedidoSelectedTable;
 		}
 
 	}
@@ -132,8 +145,6 @@ public class principalbean implements Serializable{
 			if(pedidoSelected==null)
 			{pedidoSelected = new Pedido();}
 			
-			Pedido p = new Pedido();
-			
 			Date date = new Date();
 			SimpleDateFormat d = new SimpleDateFormat("dd/MM/yyyy"); 
 			SimpleDateFormat h = new SimpleDateFormat("H:m:s");
@@ -143,6 +154,7 @@ public class principalbean implements Serializable{
 			pedidoSelected.setData(data);
 			pedidoSelected.setHora(hora);
 			pedidoSelected.setCliente(clienteSelected);
+			
 			ret = new PedidoDAO().save(pedidoSelected);
 		
 		
@@ -210,12 +222,10 @@ public class principalbean implements Serializable{
 			
 		}
 		
-		
 		return ret;
 		
 	}
 
-	
 	public void limpar(){
 		
 		produtoSelected = new Produto();
@@ -284,22 +294,7 @@ public class principalbean implements Serializable{
 				break; 
 			}return status;
 	}
-			public int barrastatus(){
-				int status = 0;
-						switch(pedidoSelected.getStatus()) { 
-						case 1: status = 25;
-						break;
-						case 2: status = 50;
-						break;
-						case 3: status = 75;
-						break;
-						case 4: status = 100;
-						break;
-						default:status = 0;
-						break; 
-					}return status;		
-		
-	}
+			
 	
 	public String gotobemvindo() {
 		String ret="#";
@@ -309,8 +304,6 @@ public class principalbean implements Serializable{
 	}
 	
 	
-	
-
 	public String gotoCardapio() {
 		String ret="#";
 		ret = "cardapio? faces-redirect=true";
@@ -319,8 +312,6 @@ public class principalbean implements Serializable{
 	}
 
 	
-	
-
 	public String gotoPagamento() {
 		String ret="#";
 		ret = "pagamento? faces-redirect=true";
@@ -334,8 +325,6 @@ public class principalbean implements Serializable{
 		
 		return ret;
 	}
-	
-	
 	
 	
 	public String gotoFecharContaDinheiro() {
@@ -352,11 +341,8 @@ public class principalbean implements Serializable{
 		
 		return ret;
 	}
-	
-	
 
-	
-	
+
 	public String gotoFecharContaCartao() {
 		String ret="#";
 		
@@ -399,6 +385,256 @@ public class principalbean implements Serializable{
 		
 	}
 	
+	
+public void atualizatela() {
+		
+		if(jacadastrado==0) {
+		jacadastrado = 1;
+		}else {
+			jacadastrado=0;
+		}
+		
+	}
+	
+	
+	public String loginCliente() {
+		String ret="#";
+		
+		if(!email.isEmpty()&&!senha.isEmpty())
+		{
+			Usuario utmp = new UsuarioDAO().Login(email, senha);
+			if(utmp!=null){
+				clienteSelected = new ClienteDAO().getAllbyUsuario(utmp);
+				utmp=null;
+				ret = "bemvindo?faces-redirect=true";
+			}else {
+				
+				FacesUtils.adicionaMensagemDeFatal("Usuario e/ou senha inválidos");
+			}
+			
+		}else {
+			FacesUtils.adicionaMensagemDeAdvertencia("Informe o email e a senha");
+		}
+		
+		return ret;
+		
+		
+		
+	}
+	
+	public String cadastraCliente() {
+		
+		String ret="#";
+		if(!nome.isEmpty()&&!email.isEmpty()&&!telefone.isEmpty()&&!senha.isEmpty()) {
+			
+			if(new UsuarioDAO().getAllbyEmail(email)==null) {
+				
+				Usuario u = new Usuario();
+				u.setEmail(email);
+				u.setPerfil(0);
+				u.setSenha(senha);
+				
+				if(new UsuarioDAO().save(u)) {
+					clienteSelected = new Cliente();
+					clienteSelected.setLogin(u);
+					clienteSelected.setNome(nome);
+					clienteSelected.setTelefone(telefone);
+					
+					if(new ClienteDAO().save(clienteSelected)) {
+						FacesUtils.adicionaMensagemDeInformacao("Cadastro efetuado com sucesso");
+						ret = "bemvindo?faces-redirect=true";
+					}else {
+						new UsuarioDAO().delete(u);						
+					}
+					
+				}else {
+					FacesUtils.adicionaMensagemDeFatal("Falha ao efeturar o cadastro, tente novamente mais tarde");
+				}
+				
+			}else {
+				
+				FacesUtils.adicionaMensagemDeErro("Email já cadastrado");
+			}
+			
+		}else {
+			
+			FacesUtils.adicionaMensagemDeAdvertencia("Todos os campos são obrigatórios");
+		}
+		
+		return ret;
+		
+	}
+
+	
+	private void recarregaCliente(){
+		
+		clientes = new ClienteDAO().getAllOrderAsc(Cliente.class, "nome");
+	}
+	
+	public void salvarcliente(){
+		if(new VerificaPermissao().isSupervisor()){
+		if(clienteSelected!=null)
+		{
+			if(new ClienteDAO().save(clienteSelected))
+			{
+				System.out.println("Operação realizada com sucesso!");
+				clienteSelected = new Cliente();
+				recarregaCliente();
+			}
+			else
+			{
+				System.out.println("Falha ao realizar a operação");
+			}
+		}
+		else
+		{
+			FacesUtils.adicionaMensagemDeErro("Não é possível salvar esse cliente");
+		}
+	
+		}else{
+			FacesUtils.adicionaMensagemDeErro("Você não possui permissão para efetuar esta operação");
+		}
+	}
+
+	
+	public void excluircliente(){
+		if(new VerificaPermissao().isSupervisor()){
+		if(clienteSelected!=null && clienteSelected.getId()>0)
+		{
+			if(new ClienteDAO().delete(clienteSelected))
+			{
+				System.out.println("Operação realizada com sucesso!");
+				clienteSelected = new Cliente();
+				
+				recarregaCliente();
+			}
+			else
+			{
+				System.out.println("Falha ao realizar a operação");
+			}
+		}
+		else
+		{
+			FacesUtils.adicionaMensagemDeErro("Não é possível salvar esse cliente");
+		}
+		}else{
+			FacesUtils.adicionaMensagemDeErro("Você não possui permissão para efetuar essa operação");
+			
+		}
+		
+	}
+
+	
+	public void limparCliente(){
+		
+		clienteSelected = new Cliente();
+		clienteSelectedTable = new Cliente();
+		
+	}
+
+
+	public Cliente getClienteSelected() {
+		return clienteSelected;
+	}
+
+
+	public void setClienteSelected(Cliente clienteSelected) {
+		this.clienteSelected = clienteSelected;
+	}
+
+
+	public Cliente getClienteSelectedTable() {
+		return clienteSelectedTable;
+	}
+
+
+	public void setClienteSelectedTable(Cliente clienteSelectedTable) {
+		this.clienteSelectedTable = clienteSelectedTable;
+	}
+
+	public List<Cliente> getClientes() {
+		return clientes;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public String getNome() {
+		return nome;
+	}
+
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	
+	public String getTelefone() {
+		return telefone;
+	}
+
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+
+	public String getSenha() {
+		return senha;
+	}
+
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+
+	public int getJacadastrado() {
+		return jacadastrado;
+	}
+
+
+	public void setJacadastrado(int jacadastrado) {
+		this.jacadastrado = jacadastrado;
+	}
+
+
+	public String getN_cartao() {
+		return n_cartao;
+	}
+
+
+	public void setN_cartao(String n_cartao) {
+		this.n_cartao = n_cartao;
+	}
+
+	public ItemPedido getItemPedidoSelectedTable() {
+		return itemPedidoSelectedTable;
+	}
+
+	public void setItemPedidoSelectedTable(ItemPedido itemPedidoSelectedTable) {
+		this.itemPedidoSelectedTable = itemPedidoSelectedTable;
+	}
+
+	public List<Pedido> getPedidos() {
+		
+		  if(clienteSelected!=null&&clienteSelected.getId()>0) {
+			    pedidos = new PedidoDAO().getAllbyCliente(clienteSelected);
+		  }
+		
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
 	
 	
 }

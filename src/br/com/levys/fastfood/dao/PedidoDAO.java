@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import br.com.levys.fastfood.modelo.Cliente;
 import br.com.levys.fastfood.modelo.ItemPedido;
 import br.com.levys.fastfood.modelo.Pedido;
 import br.com.levys.fastfood.util.SessionFac;
@@ -94,7 +95,26 @@ public class PedidoDAO extends DaoGenerico<Pedido, Integer> {
 		}
 
 	}
+
 	
+	
+	
+	
+	public List<Pedido> getAllbyCliente(Cliente c) {
+
+		Session session = new SessionFac().getSession();
+		session.beginTransaction();
+		Criteria crit = session.createCriteria(Pedido.class).add(Restrictions.eq("cliente", c));
+		List<Pedido> list = crit.list();
+		session.getTransaction().commit();
+		session.close();
+		if (list.size() > 0) {
+			return list;
+		} else {
+			return new ArrayList<Pedido>();
+		}
+
+	}
 		
 
 }

@@ -11,8 +11,7 @@ xmlns="http://www.w3.org/1999/xhtml"
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content="página de acompanhamento das rotinas de implantação do sistema mega"/>
-    <meta name="author" content="Edson Mesquita"/>
+    <meta name="author" content="Levy Martins"/>
 
     <title>..::FASTFOOD-LOGIN::..</title>
 
@@ -45,38 +44,38 @@ xmlns="http://www.w3.org/1999/xhtml"
 														<p:graphicImage url="img/logo.png" width="400" height="250" />
 													</div>
 													<h:form id="fprinc" >
-														<p:panelGrid rendered="#{clienteBean.jacadastrado==0}" columns="2" columnClasses="Wid5, Wid90" layout="grid" style="border:0px none;background:none" >
+														<p:panelGrid rendered="#{principalbean.jacadastrado==0}" columns="2" columnClasses="Wid3, Wid90" layout="grid" style="border:0px none;background:none" >
 															<h:outputText value="Email:" />
-															<p:inputText value="#{clienteBean.email}"></p:inputText>
+															<p:inputText value="#{principalbean.email}"></p:inputText>
 															<h:outputText value="Senha:" />
-															<p:password value="#{clienteBean.senha}" feedback="false"></p:password>
+															<p:password value="#{principalbean.senha}" feedback="false"></p:password>
 														<p:column>
 														</p:column>
 														<p:column>
-														<p:commandButton value="Entrar" action="#{clienteBean.loginCliente()}"></p:commandButton>
-														<p:commandButton value="Cancelar" action="#{clienteBean.limpar}"></p:commandButton>
-														</p:column>
+														<p:commandButton value="Entrar" action="#{principalbean.loginCliente()}"></p:commandButton>
+														<p:commandButton value="Cancelar" action="#{principalbean.limparCliente()}"></p:commandButton>
+														</p:column>	
 														<br/>
 														<br/>
-														<p:column><p:commandLink value="Faça seu cadastro" action="#{clienteBean.atualizatela()}" update="fprinc"/></p:column>
+														<p:column><p:commandLink value="Faça seu cadastro" action="#{principalbean.atualizatela()}" update="fprinc"/></p:column>
 														</p:panelGrid>
-														<p:panelGrid rendered="#{clienteBean.jacadastrado==1}" columns="2" columnClasses="Wid8, Wid90" layout="grid" style="border:0px none;background:none" >
+														<p:panelGrid rendered="#{principalbean.jacadastrado==1}" columns="2" columnClasses="Wid3, Wid90" layout="grid" style="border:0px none;background:none" >
 															<h:outputText value="Email:" />
-															<p:inputText value="#{clienteBean.email}"></p:inputText>
+															<p:inputText value="#{principalbean.email}"></p:inputText>
 															<h:outputText value="Nome:" />
-															<p:inputText value="#{clienteBean.nome}" feedback="false"></p:inputText>
+															<p:inputText value="#{principalbean.nome}" feedback="false"></p:inputText>
 															
 															<h:outputText value="Telefone:" />
-															<p:inputText value="#{clienteBean.telefone}" feedback="false"></p:inputText>
+															<p:inputText value="#{principalbean.telefone}" feedback="false"></p:inputText>
 														
 															<h:outputText value="Senha:" />
-															<p:password value="#{clienteBean.senha}" feedback="true" weakLabel="senha fraca" goodLabel="senha boa" strongLabel="senha forte"></p:password>
+															<p:password value="#{principalbean.senha}" feedback="true" weakLabel="senha fraca" goodLabel="senha boa" strongLabel="senha forte"></p:password>
 															<p:column>
 															</p:column>
-															<p:commandButton value="Cadastrar" action="#{clienteBean.cadastraCliente()}"></p:commandButton>
+															<p:commandButton value="Cadastrar" action="#{principalbean.cadastraCliente()}"></p:commandButton>
 															<p:column>
 															</p:column>
-															<p:column><p:commandLink value="Voltar" action="#{clienteBean.atualizatela()}" update="fprinc"/></p:column>
+															<p:column><p:commandLink value="Voltar" action="#{principalbean.atualizatela()}" update="fprinc"/></p:column>
 														</p:panelGrid>
 													</h:form>
 												<p:messages autoUpdate="true"></p:messages>

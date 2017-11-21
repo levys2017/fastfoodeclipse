@@ -23,7 +23,8 @@ public class Conta implements Serializable {
 	@JoinColumn(name="pedido")
     private Pedido pedido;
     private float valor;
-  
+    private int situacao;
+    private Cliente cliente;
 
     public float getValor() {
         return valor;
@@ -33,15 +34,7 @@ public class Conta implements Serializable {
         this.valor = valor;
     }
 
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
-    }
-
-	public int getId() {
+    public int getId() {
 		return id;
 	}
 
@@ -57,5 +50,19 @@ public class Conta implements Serializable {
 		this.pedido = pedido;
 	}
 
-    
+	public int getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(int situacao) {
+		this.situacao = situacao;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 }

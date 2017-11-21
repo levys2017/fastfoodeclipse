@@ -23,8 +23,8 @@ public class Cliente implements Serializable{
     private String  nome;
     private String  telefone;
     private String  n_cartao;
-    private String    dt_venc;
-    private String    csv;
+    private String  dt_venc;
+    private String  csv;
     
   
    

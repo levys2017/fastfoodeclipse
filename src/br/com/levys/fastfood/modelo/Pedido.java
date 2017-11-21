@@ -26,26 +26,21 @@ public class Pedido implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="cliente")
     private Cliente cliente;
-    private int senha;
     private double valor_total;
     private int forma_pagamento;
     private int status;
     private double valor_pago;
     private String data;
 	private String hora;
-    
+	@Transient
+    private String desc_status;
+	
+	@Transient
+	private int barrastatus;
     
     @Transient
     List<ItemPedido> itens;
 
-
-    public int getSenha() {
-        return senha;
-    }
-
-    public void setSenha(int senha) {
-        this.senha = senha;
-    }
 
     public double getValor_total() {
         return valor_total;
@@ -119,4 +114,45 @@ public class Pedido implements Serializable{
 	public void setHora(String hora) {
 		this.hora = hora;
 	}
+	
+
+	
+
+
+	public String getDesc_status() {
+		String status = "";
+		switch(this.status) { 
+		case 1: status = "Aguardando pagamento...";
+		break;
+		case 2: status = "Pagamento efetuado...";
+		break;
+		case 3: status = "Em preparo...";
+		break;
+		case 4: status = "Pronto!!!";
+		break;
+		default:status = "Faça seu pedido!!!";
+		break; 
+	}return status;
+
+	}
+
+	public int getBarrastatus() {
+		int status = 0;
+		switch(this.status) { 
+		case 1: status = 25;
+		break;
+		case 2: status = 50;
+		break;
+		case 3: status = 75;
+		break;
+		case 4: status = 100;
+		break;
+		default:status = 0;
+		break; 
+	}return status;	
+	}
+	
+	
+	
+	
 }

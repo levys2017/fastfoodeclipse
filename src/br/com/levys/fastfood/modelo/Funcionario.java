@@ -25,9 +25,8 @@ public class Funcionario implements Serializable {
     private String nome;
     private String cpf;
     private int sexo;
-    private String email;
     private String telefone;
-    private String cargo; //0 - cliente 1- Atendimento  2- Cozinha 3 - Diretoria
+    private int cargo; //0 - cliente 1- Atendimento  2- Cozinha 3 - Diretoria
     private String funcao;
 
     public String getNome() {
@@ -54,14 +53,6 @@ public class Funcionario implements Serializable {
         this.sexo = sexo;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getTelefone() {
         return telefone;
     }
@@ -70,11 +61,11 @@ public class Funcionario implements Serializable {
         this.telefone = telefone;
     }
 
-    public String getCargo() {
+    public int getCargo() {
         return cargo;
     }
 
-    public void setCargo(String cargo) {
+    public void setCargo(int cargo) {
         this.cargo = cargo;
     }
 

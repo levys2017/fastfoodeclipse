@@ -15,8 +15,8 @@
 							<h2>Meus Pedidos</h2>
 						</div>
 					       
-					    <p:dataTable id="tip" var="it" value="#{principalbean.itensPedido}" selectionMode="single" selection="#{principalbean.produtoSelectedTable}" rowKey="#{it.id}"  emptyMessage="Nenhum item selecionado" reflow="true">
-							<p:ajax event="rowSelect" listener="#{principalbean.produtoSelectedTable}" update=":fprinc tip"></p:ajax>
+					    <p:dataTable id="tip" var="it" value="#{principalbean.itensPedido}"  rowKey="#{it.id}"  emptyMessage="Nenhum item selecionado" reflow="true">
+							
 									<p:column>
 											<h:outputText value="#{it.produto.nome}"></h:outputText>						
 									</p:column>
@@ -29,7 +29,7 @@
 											</h:outputText>						
 									</p:column>
 									<p:column>
-											<p:commandLink update=":fprinc"  title="Remover" action="#{principalbean.removeItem}">
+											<p:commandLink update=":fprinc"  title="Remover" action="#{principalbean.removeItem}" >
 							                    <h:outputText value="Remover" style="margin:0 auto;" />
 							                    <f:setPropertyActionListener value="#{it}" target="#{principalbean.itemPedidoSelected}" />
 							                </p:commandLink>

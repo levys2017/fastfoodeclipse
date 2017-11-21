@@ -12,12 +12,34 @@
 						<div >
 							<p:panelGrid columns="1">
 							
-								Bem-vindo 
-							<center><h3>Status</h3>
-							<h:outputText value="#{principalbean.status()}"></h:outputText>
-    						<p:progressBar value="#{principalbean.barrastatus()}" labelTemplate="{value}%" displayOnly="true" style="width:300px"/>
-    						</center>
+							<h:outputText value="Bem-vindo #{principalbean.clienteSelected.nome}"></h:outputText>
 							</p:panelGrid>
+							
+							<p:dataTable value="#{principalbean.pedidos}" var="p">
+							<p:column>
+									<h:outputText value="#{p.id}"></h:outputText>
+							</p:column>
+							
+							<p:column>
+									<h:outputText value="#{p.cliente.nome}"></h:outputText>
+							</p:column>
+							
+							<p:column>
+									<h:outputText value="#{p.valor_total}"></h:outputText>
+							</p:column>
+							
+							<p:column>
+									<h:outputText value="#{p.valor_pago}"></h:outputText>
+							</p:column>
+							
+							
+							<p:column>
+									<h:outputText value="#{p.desc_status}"></h:outputText>
+							</p:column>
+							
+							
+							
+							</p:dataTable>
 							
 							
 						</div>
