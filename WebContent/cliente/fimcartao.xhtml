@@ -1,0 +1,59 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="../templates/template2.xhtml">
+
+	
+
+		 <title>..::FASTFOOD- CADASTRO::..</title>
+
+	<ui:define name="conteudo">
+		<h:form id="fprinc">
+						
+						<p:panel rendered="#{principalbean.pedidoSelected.st_pagamento==2}">
+						<h3>Pagamento efetuado!!!</h3>
+						<p:separator></p:separator>
+						<h4>Código do Pedido: #{principalbean.pedidoSelected.id}</h4>
+						<h5>Total Pedido  <h:outputText value="R$ #{principalbean.pedidoSelected.valor_total}"><f:convertNumber type="currency"></f:convertNumber> </h:outputText></h5>
+						<p:commandButton value="Voltar" action="#{principalbean.gotobemvindo()}" update="fprinc"/>
+			
+						</p:panel>
+						
+						<p:panel rendered="#{principalbean.pedidoSelected.st_pagamento==1}">
+						<h3>Pagamento efetuado Parcialmente!!!</h3>
+						<h3>Faltam <h:outputText value="#{principalbean.pedidoSelected.valor_total -principalbean.pedidoSelected.valor_pago}">
+						<f:convertNumber type="currency"></f:convertNumber>
+						</h:outputText> </h3>
+						
+						<p:commandButton value="Pagar"   action="#{principalbean.pagarrestante}" update="fprinc">  </p:commandButton>
+						
+						<p:commandButton value="Dividir Conta" action="#{principalbean.enviar_parceiro}" update="fprinc">  </p:commandButton>
+						
+						
+						</p:panel>
+						<p:panel rendered="#{principalbean.tp_pag==1}">
+						
+							##rotina de pagamento						
+						</p:panel>
+						
+						
+						<p:panel rendered="#{principalbean.tp_pag==2}">
+						
+							<p:panelGrid columns="1">
+									<h:outputText value="Informe o Email do Parceiro"></h:outputText>
+									<p:inputText   value="#{principalbean.email_parceiro}"></p:inputText>
+									
+							</p:panelGrid>
+							<p:commandButton action="#{principalbean.gotoBemvindo}" value="Voltar"></p:commandButton>
+							<p:commandButton action="#{principalbean.informaParceiro}" value="Enviar"></p:commandButton>					
+						</p:panel>
+		      
+		
+		</h:form>
+		
+		<p:growl autoUpdate="true"></p:growl>
+		
+		
+	</ui:define>
+</ui:composition>

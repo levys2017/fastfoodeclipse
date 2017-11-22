@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Funcionario implements Serializable {
@@ -28,8 +29,14 @@ public class Funcionario implements Serializable {
     private String telefone;
     private int cargo; //0 - cliente 1- Atendimento  2- Cozinha 3 - Diretoria
     private String funcao;
-
-    public String getNome() {
+    @Transient
+    private String desc_Sexo;
+    @Transient
+    private String desc_Cargo;
+    
+    
+    
+	public String getNome() {
         return nome;
     }
 
@@ -93,6 +100,33 @@ public class Funcionario implements Serializable {
 		this.usuario = usuario;
 	}
 
-    
+	public String getDesc_sexo() {
+		String desc_Sexo;
+		desc_Sexo ="";
+		
+		switch(this.sexo) {
+		case 1: desc_Sexo = "Masculino";
+		break;
+		case 2: desc_Sexo = "Feminino";
+		break;
+		
+	}return desc_Sexo;
+	
+	}
+	public String getDesc_cargo() {
+		String desc_Cargo;
+		desc_Cargo ="";
+		
+		switch(this.sexo) {
+		case 1: desc_Cargo = "Atendimento";
+		break;
+		case 2: desc_Cargo = "Cozinha";
+		break;
+		case 3: desc_Cargo = "Diretoria";
+		break;
+	}return desc_Cargo;
+	
+	}
+
     
 }

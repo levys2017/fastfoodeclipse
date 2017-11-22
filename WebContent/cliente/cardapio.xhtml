@@ -2,7 +2,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" template="templates/template2.xhtml">
+	xmlns:p="http://primefaces.org/ui" template="../templates/template2.xhtml">
 
 	 <title>..::FASTFOOD- CADASTRO::..</title>
 
@@ -21,14 +21,14 @@
         rowsPerPageTemplate="6,12,16">
  
         <f:facet name="header">
-           Carrinho(#{principalbean.itensPedido.size()})  ----- Total Pedido  <h:outputText value=" #{principalbean.pedidoSelected.valor_total}"><f:convertNumber type="currency"></f:convertNumber> </h:outputText> 
+           Carrinho(#{principalbean.itensPedido.size()}) 
            
            
         </f:facet>
  
         <p:panel header="#{p.nome}" style="text-align:center">
             <h:panelGrid columns="2" style="width:100%">
-                 <p:graphicImage   url="img/#{p.imagem}" width="90" height="80"/> 
+                 <p:graphicImage   url="../img/#{p.imagem}" width="90" height="80"/> 
                 
                 <h:outputText value="#{p.valor}" style="font-size:25px">
 					<f:convertNumber type="currency"></f:convertNumber>
@@ -49,7 +49,7 @@
         </p:panel>
         <f:facet name="footer">
 				<p:columnGroup>
-					 Total Pedido  <h:outputText value=" #{principalbean.pedidoSelected.valor_total}"><f:convertNumber type="currency"></f:convertNumber> </h:outputText>	
+					 	Carrinho(#{principalbean.itensPedido.size()})
 				</p:columnGroup>        
         </f:facet>
  				

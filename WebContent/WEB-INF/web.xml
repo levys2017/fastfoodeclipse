@@ -17,6 +17,25 @@
     <filter-name>PrimeFaces FileUpload Filter</filter-name>
     <servlet-name>Faces Servlet</servlet-name>
   </filter-mapping>
+  
+  <filter>
+    	<filter-name>VerificaSession</filter-name>
+    	<filter-class>br.com.levys.fastfood.bean.SecFilter</filter-class>
+  	</filter>
+  	<filter-mapping>
+    	<filter-name>VerificaSession</filter-name>
+    	<url-pattern>/pages/*</url-pattern>
+  	</filter-mapping>
+ 
+  <filter>
+    	<filter-name>VerificaCliente</filter-name>
+    	<filter-class>br.com.levys.fastfood.bean.SecFilter</filter-class>
+  	</filter>
+  	<filter-mapping>
+    	<filter-name>VerificaCliente</filter-name>
+    	<url-pattern>/cliente/*</url-pattern>
+  	</filter-mapping>  	
+  	
   <listener>
     <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
   </listener>

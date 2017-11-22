@@ -29,6 +29,26 @@ public class ClienteDAO extends DaoGenerico<Cliente, Integer> {
 		}
 
 	}
+	
+	
+
+	public Cliente getAllbyEmail(String email) {
+
+		Session session = new SessionFac().getSession();
+		session.beginTransaction();
+		Criteria crit = session.createCriteria(Cliente.class)
+				.createAlias("login", "u")
+				.add(Restrictions.eq("u.email", email));
+		List<Cliente> list = crit.list();
+		session.getTransaction().commit();
+		session.close();
+		if (list.size() > 0) {
+			return list.get(0);
+		} else {
+			return new Cliente();
+		}
+
+	}
 		
 
 }

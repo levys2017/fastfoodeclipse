@@ -48,8 +48,13 @@ public class principalbean implements Serializable{
 	private List<Cliente> clientes              = new ArrayList<Cliente>();
 	private Cliente       clienteSelectedTable  = new Cliente();
 	private int    jacadastrado;
-	private String email, nome, telefone, senha, n_cartao;
+	private String email, nome, telefone, senha, n_cartao, email_parceiro;
 	private List<Pedido> pedidos = new ArrayList<Pedido>();
+	
+	private List<Pedido> parcerias = new ArrayList<Pedido>();
+
+	private List<Pedido> pedidos_cozinha = new ArrayList<Pedido>();
+	private int tp_pag;/// 1 - pagar o restante   2 - parceiro
 	
 	public principalbean(){
 	produtos= new ProdutoDAO().getAllOrderAsc(Produto.class, "nome");
@@ -73,6 +78,64 @@ public class principalbean implements Serializable{
 		}
 
 	}
+	
+	
+	public void zerar() {
+		pedidoSelected = new Pedido();
+		itensPedido = new ArrayList<ItemPedido>();
+		produtoSelected = new Produto();
+		jacadastrado=0;
+		
+		email="";
+		nome="";
+		telefone=""; 
+		senha="";
+		n_cartao="";
+		email_parceiro="";
+		tp_pag=0;
+	}
+	
+	
+
+	public void zerartudo() {
+		pedidoSelected = new Pedido();
+		itensPedido = new ArrayList<ItemPedido>();
+		produtoSelected = new Produto();
+		clienteSelected = new Cliente();	
+		nome="";
+		telefone=""; 
+		n_cartao="";
+		email_parceiro="";
+		tp_pag=0;
+		
+	}
+	
+	
+	public void informaParceiro() {
+		
+		Cliente p = new ClienteDAO().getAllbyEmail(email_parceiro);
+		
+		if(p.getId()>0) {
+			pedidoSelected.setParceiro(p);
+			if(new PedidoDAO().save(pedidoSelected)) {
+				zerar();
+				FacesUtils.adicionaMensagemDeInformacao("Conta dividida com sucesso, aguardando pagamento do parceiro");
+			}else {
+				
+				FacesUtils.adicionaMensagemDeFatal("Falha ao realizar a operação, contacte o suporte");		
+			}
+			
+			
+		}else {
+			
+			FacesUtils.adicionaMensagemDeAdvertencia("Parceiro não cadastrado, ou email incorreto");
+		}
+		
+		
+		
+	}
+	
+	
 	
 
 	private void recarregaProduto(){
@@ -341,13 +404,68 @@ public class principalbean implements Serializable{
 		
 		return ret;
 	}
+	
+	
+	
+	
+	
+	public String gotoPagarParceiro() {
+		
+		
+		return  "fimcartaoparceria? faces-redirect=true";
+	}
+	
+	
+	public void pagarrestante() {
+		tp_pag=1;
+		
+	}
+	
+	public void enviar_parceiro() {
+		tp_pag=2;
+		
+	}
+	
+	
+	
+	
+	public String quitarContaParceiro() {
+		String ret="#";
+		
+	//	pedidoSelected.setValor_pago(pedidoSelected.getValor_total());
+		
+		
+		
+		pedidoSelected.setStatus(2);
+		
+		pedidoSelected.setValor_pago(pedidoSelected.getValor_total());
+		
+			
+		new PedidoDAO().savePedido(pedidoSelected, itensPedido);
+		new ClienteDAO().save(pedidoSelected.getCliente());
+		
+
+		ret = "bemvindo? faces-redirect=true";
+		
+		return ret;
+	}
+	
+	
+	
+	
 
 
 	public String gotoFecharContaCartao() {
 		String ret="#";
 		
-		pedidoSelected.setValor_pago(pedidoSelected.getValor_total());
-		pedidoSelected.setStatus(2);
+	//	pedidoSelected.setValor_pago(pedidoSelected.getValor_total());
+		
+		if(pedidoSelected.getSt_pagamento()==1) {
+		
+		pedidoSelected.setStatus(1);
+		}else if(pedidoSelected.getSt_pagamento()==2) {
+			pedidoSelected.setStatus(2);
+		}
 			
 		new PedidoDAO().savePedido(pedidoSelected, itensPedido);
 		new ClienteDAO().save(pedidoSelected.getCliente());
@@ -367,7 +485,7 @@ public class principalbean implements Serializable{
 	}
 	
 	public void aceitarPedido() {
-		if(pedidoSelected != null && pedidoSelected.getStatus() ==2) {
+		if(pedidoSelectedTable != null && pedidoSelectedTable.getStatus() ==2) {
 			pedidoSelected.setStatus(3);
 		}else {
 			
@@ -398,6 +516,10 @@ public void atualizatela() {
 	
 	
 	public String loginCliente() {
+		
+		zerartudo();
+		
+		
 		String ret="#";
 		
 		if(!email.isEmpty()&&!senha.isEmpty())
@@ -405,8 +527,20 @@ public void atualizatela() {
 			Usuario utmp = new UsuarioDAO().Login(email, senha);
 			if(utmp!=null){
 				clienteSelected = new ClienteDAO().getAllbyUsuario(utmp);
+				HttpSession sessions = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);   
+                sessions.setAttribute("usuario",clienteSelected.getLogin() );
+             
 				utmp=null;
-				ret = "bemvindo?faces-redirect=true";
+				if(clienteSelected.getLogin().getPerfil()==0) {
+				ret = "cliente/bemvindo?faces-redirect=true";
+				
+				} else if (clienteSelected.getLogin().getPerfil()==2) {
+					ret = "pages/cozinha?faces-redirect=true";	
+					
+				}else {
+					ret = "pages/pedidoatendimento?faces-redirect=true";
+					
+				}
 			}else {
 				
 				FacesUtils.adicionaMensagemDeFatal("Usuario e/ou senha inválidos");
@@ -416,10 +550,7 @@ public void atualizatela() {
 			FacesUtils.adicionaMensagemDeAdvertencia("Informe o email e a senha");
 		}
 		
-		return ret;
-		
-		
-		
+		return ret;	
 	}
 	
 	public String cadastraCliente() {
@@ -442,7 +573,10 @@ public void atualizatela() {
 					
 					if(new ClienteDAO().save(clienteSelected)) {
 						FacesUtils.adicionaMensagemDeInformacao("Cadastro efetuado com sucesso");
-						ret = "bemvindo?faces-redirect=true";
+						
+						loginCliente();
+						
+						ret = "cliente/bemvindo?faces-redirect=true";
 					}else {
 						new UsuarioDAO().delete(u);						
 					}
@@ -477,9 +611,9 @@ public void atualizatela() {
 		{
 			if(new ClienteDAO().save(clienteSelected))
 			{
+				FacesUtils.adicionaMensagemDeInformacao("Alterado com Sucesso!");
 				System.out.println("Operação realizada com sucesso!");
-				clienteSelected = new Cliente();
-				recarregaCliente();
+			
 			}
 			else
 			{
@@ -635,6 +769,53 @@ public void atualizatela() {
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
+	
+	public List<Pedido> getPedidos_cozinha() {
+		
+		if(pedidos!=null) {
+			pedidos_cozinha = new PedidoDAO().getAllbyStatus(clienteSelected);
+		}
+		return pedidos_cozinha;
+	}
+
+	public void setPedidos_cozinha(List<Pedido> pedidos_cozinha) {
+		this.pedidos_cozinha = pedidos_cozinha;
+	}
+
+	public int getTp_pag() {
+		return tp_pag;
+	}
+
+	public String getEmail_parceiro() {
+		return email_parceiro;
+	}
+
+	public void setEmail_parceiro(String email_parceiro) {
+		this.email_parceiro = email_parceiro;
+	}
+	
+	
+	public List<Pedido> getParcerias() {
+		 if(clienteSelected!=null&&clienteSelected.getId()>0) {
+			    parcerias = new PedidoDAO().getAllbyParceiro(clienteSelected);
+		  }
+		return parcerias;
+	}
+	
+	public String logout() {
+		String ret = "#";
+		FacesContext facesContext = FacesContext.getCurrentInstance(); 
+		HttpSession session = (HttpSession) facesContext .getExternalContext().getSession(false); 
+		session.invalidate();
+		
+		ret = "/welcome?faces-redirect=true";
+
+		return ret; 
+	}
+
+	
+	
+	
 	
 	
 }

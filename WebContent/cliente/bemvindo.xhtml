@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="../templates/template2.xhtml">
+
+	 <title>..::FASTFOOD- CADASTRO::..</title>
+
+	<ui:define name="conteudo">
+		<h:form id="fprinc">
+					
+						<div >
+												
+							<p:panelGrid columns="1">
+							<h:outputText value="Seja bem-vindo #{principalbean.clienteSelected.nome}"></h:outputText>
+							<p:commandLink value="Faça seu pedido!! Clique aqui" action="#{principalbean.gotoCardapio()}" update="fprinc"/>
+							<h3>Meus Pedidos</h3>
+							</p:panelGrid>
+							
+							<p:dataTable value="#{principalbean.pedidos}" var="p" emptyMessage="nenhum pedido cadastrado">
+							<p:column headerText="Cód." width="45">
+									<h:outputText value="#{p.id}"></h:outputText>
+							</p:column>
+							
+							<p:column headerText="Total a Pagar" width="70">
+									<h:outputText value="#{p.valor_total}">
+									<f:convertNumber type="currency"></f:convertNumber>
+									</h:outputText>
+							</p:column>
+							
+							<p:column headerText="Pago" width="70">
+									<h:outputText value="#{p.valor_pago}">
+									<f:convertNumber type="currency"></f:convertNumber>
+									</h:outputText>
+							</p:column>
+							
+							<p:column headerText ="Status">
+									<h:outputText value="#{p.desc_status}"></h:outputText>
+							</p:column>
+							<p:column width="70">
+									<p:commandButton value="Pagar" action="#{principalbean.gotoPagamento}" rendered="#{p.st_pagamento ne 2}">
+											<f:setPropertyActionListener value="#{p}" target="#{principalbean.pedidoSelected}"></f:setPropertyActionListener>								
+									</p:commandButton>					
+							</p:column>
+							</p:dataTable>
+							
+							
+						</div>
+					       
+					       <p:separator></p:separator>
+					       
+					       	<p:panelGrid columns="1">
+							<h3>Parcelamento de Conta</h3>
+							</p:panelGrid>
+					       <div>
+							<p:dataTable value="#{principalbean.parcerias}" var="p1" emptyMessage="Nenhuma parceria solicitada">
+							<p:column headerText="Cód." width="45">
+									<h:outputText value="#{p1.id}"></h:outputText>
+							</p:column>
+							
+							<p:column headerText="Nome" width="60">
+									<h:outputText value="#{p1.cliente.nome}"></h:outputText>
+							</p:column>
+							
+							<p:column headerText="Total a Pagar" width="60">
+									<h:outputText value="#{p1.valor_total}">
+									<f:convertNumber type="currency"></f:convertNumber>
+									</h:outputText>
+							</p:column>
+							
+							<p:column headerText="Pago" width="50">
+									<h:outputText value="#{p1.valor_pago}">
+									<f:convertNumber type="currency"></f:convertNumber>
+									</h:outputText>
+							</p:column>
+							
+							<p:column headerText ="Status" width="80">
+									<h:outputText value="#{p1.desc_status}"></h:outputText>
+							</p:column>
+							<p:column>
+							
+							<p:commandButton value="Pagar" action="#{principalbean.gotoPagarParceiro}" rendered="#{p1.st_pagamento ne 2}">
+									<f:setPropertyActionListener value="#{p1}" target="#{principalbean.pedidoSelected}"></f:setPropertyActionListener>								
+							</p:commandButton>					
+							</p:column>
+							</p:dataTable>
+							
+							
+						</div>
+					       
+						
+		      
+		
+		</h:form>
+		
+		
+		
+		
+	</ui:define>
+</ui:composition>

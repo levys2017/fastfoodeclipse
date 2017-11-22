@@ -2,7 +2,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" template="../templates/template.xhtml">
+	xmlns:p="http://primefaces.org/ui" template="../templates/template3.xhtml">
 
 	
 
@@ -14,18 +14,19 @@
 						<div>
 							<h2>Pedidos</h2>
 						</div>
+
 					       
-					    <p:dataTable id="tip" var="p" value="#{principalbean.pedidoSelected}" selectionMode="single" selection="#{principalbean.pedidoSelectedTable}" rowKey="#{p.id}"  emptyMessage="Nenhum item selecionado" reflow="true">
+					    <p:dataTable id="tip" var="p" value="#{principalbean.pedidos_cozinha}" selectionMode="single" selection="#{principalbean.pedidoSelectedTable}" rowKey="#{p.id}"  emptyMessage="Nenhum pedido solicitado" reflow="true">
 							<p:ajax event="rowSelect" listener="#{principalbean.pedidoSelectedTable}" update=":fprinc tip"></p:ajax>
-									<p:column headerText="Código" width="70">
+									<p:column headerText="Código" width="100">
 										<h:outputText value="#{p.id}"></h:outputText>						
 									</p:column>
 									<p:column headerText="Descrição">
-										<h:outputText value="#{principalbean.itemPedidoSelected.produto.descricao}"></h:outputText>						
+										<h:outputText value="#{principalbean.itensPedido}"></h:outputText>						
 									</p:column>
 
-									<p:column headerText="Status" width="200">
-										<h:outputText value= "#{principalbean.status()}"></h:outputText>	
+									<p:column headerText="Status">
+										<h:outputText value="#{p.desc_status}"></h:outputText>	
 									</p:column>
 									
 									<p:column width="200" update="tip">  

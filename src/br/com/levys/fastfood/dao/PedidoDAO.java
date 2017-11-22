@@ -96,10 +96,7 @@ public class PedidoDAO extends DaoGenerico<Pedido, Integer> {
 
 	}
 
-	
-	
-	
-	
+
 	public List<Pedido> getAllbyCliente(Cliente c) {
 
 		Session session = new SessionFac().getSession();
@@ -113,8 +110,36 @@ public class PedidoDAO extends DaoGenerico<Pedido, Integer> {
 		} else {
 			return new ArrayList<Pedido>();
 		}
-
 	}
-		
+	
+	
+	public List<Pedido> getAllbyParceiro(Cliente c) {
 
+		Session session = new SessionFac().getSession();
+		session.beginTransaction();
+		Criteria crit = session.createCriteria(Pedido.class).add(Restrictions.eq("parceiro", c));
+		List<Pedido> list = crit.list();
+		session.getTransaction().commit();
+		session.close();
+		if (list.size() > 0) {
+			return list;
+		} else {
+			return new ArrayList<Pedido>();
+		}
+	}
+
+	public List<Pedido> getAllbyStatus(Cliente c) {
+
+		Session session = new SessionFac().getSession();
+		session.beginTransaction();
+		Criteria crit = session.createCriteria(Pedido.class);
+		List<Pedido> list = crit.list();
+		session.getTransaction().commit();
+		session.close();
+		if (list.size() > 0) {
+			return list;
+		} else {
+			return new ArrayList<Pedido>();
+		}
+	}
 }

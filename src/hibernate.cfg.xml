@@ -21,7 +21,6 @@
   <mapping class="br.com.levys.fastfood.modelo.Conta"/>
   <mapping class="br.com.levys.fastfood.modelo.Funcionario"/>
   <mapping class="br.com.levys.fastfood.modelo.ItemPedido"/>
-  <mapping class="br.com.levys.fastfood.modelo.Localizacao"/>
   <mapping class="br.com.levys.fastfood.modelo.Pedido"/>
   <mapping class="br.com.levys.fastfood.modelo.Produto"/>
   <mapping class="br.com.levys.fastfood.modelo.Usuario"/>

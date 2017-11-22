@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="../templates/template2.xhtml">
+
+	
+
+		 <title>..::FASTFOOD- CADASTRO::..</title>
+
+	<ui:define name="conteudo">
+		<h:form id="fprinc">
+						
+						<p:panel rendered="#{principalbean.pedidoSelected.st_pagamento==2}">
+						<h3>Pagamento efetuado!!!</h3>
+						<p:separator></p:separator>
+						<h4>Código do Pedido: #{principalbean.pedidoSelected.id}</h4>
+						<h5>Total Pedido  <h:outputText value="R$ #{principalbean.pedidoSelected.valor_total}"><f:convertNumber type="currency"></f:convertNumber> </h:outputText></h5>
+						<p:commandButton value="Voltar" action="#{principalbean.gotobemvindo()}" update="fprinc"/>
+			
+						</p:panel>
+						
+						<p:panel rendered="#{principalbean.pedidoSelected.st_pagamento==1}">
+						<h3>Pagamento efetuado parcialmente!!!</h3>
+						<h3>faltam <h:outputText value="#{principalbean.pedidoSelected.valor_total -principalbean.pedidoSelected.valor_pago}"></h:outputText> </h3>
+						
+						<p:commandButton value="Pagar"   action="#{principalbean.enviar_parceiro}" update="fprinc">  </p:commandButton>
+						
+						
+						
+						</p:panel>
+						
+						
+						
+						<p:panel rendered="#{principalbean.tp_pag==2}">
+						
+							<p:panelGrid columns="1">
+									<p:panelGrid    columns="2"  columnClasses="wd20, wd80"   layout="grid" style="border:0px none;background:none">
+									<h:outputText value="Numero do Cartão:"></h:outputText>
+									<p:inputMask value="#{principalbean.pedidoSelected.parceiro.n_cartao}" mask="9999.9999.9999.9999"></p:inputMask>
+									
+									<h:outputText value="Vencimento:"></h:outputText>
+									<p:inputMask value="#{principalbean.pedidoSelected.parceiro.dt_venc}" mask="99.9999"></p:inputMask>
+									
+									<h:outputText value="CVC: "></h:outputText>
+									<p:inputMask value="#{principalbean.pedidoSelected.parceiro.csv}" mask="999"></p:inputMask>
+									
+									<h:outputText value="Valor a Pagar: "></h:outputText>
+									<h:outputText value="#{principalbean.pedidoSelected.valor_total -principalbean.pedidoSelected.valor_pago}" >
+												<f:convertNumber type="currency"></f:convertNumber>
+									</h:outputText>
+									
+									
+									
+							</p:panelGrid>
+									
+							</p:panelGrid>
+							<p:commandButton action="#{principalbean.quitarContaParceiro}" value="Pagar"></p:commandButton>					
+						</p:panel>
+		      
+		
+		</h:form>
+		
+		<p:growl autoUpdate="true"></p:growl>
+		
+		
+	</ui:define>
+</ui:composition>

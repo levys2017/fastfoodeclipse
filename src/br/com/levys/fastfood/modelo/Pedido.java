@@ -32,6 +32,13 @@ public class Pedido implements Serializable{
     private double valor_pago;
     private String data;
 	private String hora;
+	
+	@ManyToOne
+	@JoinColumn(name="parceiro", nullable=true)
+    private Cliente parceiro;
+	
+	private int status_parceiro;///0- aguardando aceitação  1 - pago  2 - recusado
+	
 	@Transient
     private String desc_status;
 	
@@ -40,6 +47,9 @@ public class Pedido implements Serializable{
     
     @Transient
     List<ItemPedido> itens;
+    
+    @Transient
+    private int st_pagamento;//0 ---- não pago  1 - bx parcial  - 2 - pago
 
 
     public double getValor_total() {
@@ -115,10 +125,6 @@ public class Pedido implements Serializable{
 		this.hora = hora;
 	}
 	
-
-	
-
-
 	public String getDesc_status() {
 		String status = "";
 		switch(this.status) { 
@@ -150,6 +156,36 @@ public class Pedido implements Serializable{
 		default:status = 0;
 		break; 
 	}return status;	
+	}
+
+	public Cliente getParceiro() {
+		return parceiro;
+	}
+
+	public void setParceiro(Cliente parceiro) {
+		this.parceiro = parceiro;
+	}
+
+	public int getStatus_parceiro() {
+		return status_parceiro;
+	}
+
+	public void setStatus_parceiro(int status_parceiro) {
+		this.status_parceiro = status_parceiro;
+	}
+
+	public int getSt_pagamento() {
+		
+		if(this.valor_pago==0) {
+			st_pagamento=0;
+		}else if(this.valor_pago<this.valor_total) {
+			
+			st_pagamento=1;
+		}else {
+			st_pagamento=2;
+		}
+		
+		return st_pagamento;
 	}
 	
 	

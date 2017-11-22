@@ -28,7 +28,8 @@ public class Produto implements Serializable{
     private double valor;
     private String categoria;
     private String imagem;
-    
+    @Transient
+    private String desc_Categoria;
     @Transient
     private int  qtd;
     
@@ -115,6 +116,22 @@ public class Produto implements Serializable{
 	public void setQtd(int qtd) {
 		this.qtd = qtd;
 	}
+
+
+	public String getDesc_categoria() {
+		String categoria = "";
+		switch(this.categoria) {
+		case "B": categoria = "Bebida";
+		break;
+		case "L": categoria = "Lanche";
+		break;
+		case "P": categoria = "Prato";
+		break;
+		}return categoria;
+
+	
+	}
+
     
     
 }

@@ -2,7 +2,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" template="templates/template2.xhtml">
+	xmlns:p="http://primefaces.org/ui" template="../templates/template2.xhtml">
 
 	
 
@@ -37,7 +37,7 @@
 						</p:panel>
 						
 						
-						<p:panel rendered="#{principalbean.pedidoSelected.forma_pagamento == 2 and principalbean.pedidoSelected.cliente.n_cartao == null}" id="pg3">
+						<p:panel rendered="#{principalbean.pedidoSelected.forma_pagamento == 2}" id="pg3">
 							<p:panelGrid    columns="2"  columnClasses="wd20, wd80"   layout="grid" style="border:0px none;background:none">
 									<h:outputText value="Numero do Cartão:"></h:outputText>
 									<p:inputMask value="#{principalbean.pedidoSelected.cliente.n_cartao}" mask="9999.9999.9999.9999"></p:inputMask>
@@ -48,21 +48,20 @@
 									<h:outputText value="CVC: "></h:outputText>
 									<p:inputMask value="#{principalbean.pedidoSelected.cliente.csv}" mask="999"></p:inputMask>
 									
+									<h:outputText value="Valor a Pagar: "></h:outputText>
+									<p:inputText value="#{principalbean.pedidoSelected.valor_pago}" >
+												<f:convertNumber type="currency"></f:convertNumber>
+									</p:inputText>
+									
+									
+									
 							</p:panelGrid>
 							<p:commandButton value="Cancelar" action="#{principalbean.excluir()}" update="fprinc"/>
 							<p:commandButton value="Voltar" action="#{principalbean.gotoPedidoCliente()}"/>
 							<p:commandButton value="Finalizar" action="#{principalbean.gotoFecharContaCartao()}"/>
 						</p:panel>
 						
-						<p:panel rendered="#{principalbean.pedidoSelected.forma_pagamento == 2 and principalbean.pedidoSelected.cliente.n_cartao != null}" id="pg4">
-									
-							<p:commandButton value="Cancelar" action="#{principalbean.excluir()}" update="fprinc"/>
-							<p:commandButton value="Voltar" action="#{principalbean.gotoPedidoCliente()}"/>
-							<p:commandButton value="Finalizar" action="#{principalbean.gotoFecharContaCartao()}"/>
-						</p:panel>
-							
-
-		</h:form>
+				</h:form>
 		
 		
 		

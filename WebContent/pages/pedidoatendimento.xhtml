@@ -10,12 +10,12 @@
 
 	<ui:define name="conteudo">
 		<h:form id="fprinc">
-					
+		<p:poll interval="30" update="fprinc"></p:poll>			
 						<div>
 							<h2>Pedidos</h2>
 						</div>
 					       
-					    <p:dataTable id="tip" var="p" value="#{principalbean.pedidoSelected}" selectionMode="single" selection="#{principalbean.pedidoSelectedTable}" rowKey="#{p.id}"  emptyMessage="Nenhum item selecionado" reflow="true">
+					    <p:dataTable id="tip" var="p" value="#{principalbean.pedidos}" selectionMode="single" selection="#{principalbean.pedidoSelectedTable}" rowKey="#{p.id}"  emptyMessage="Nenhum pedido solicitado" reflow="true">
 							<p:ajax event="rowSelect" listener="#{principalbean.pedidoSelectedTable}" update=":fprinc tip"></p:ajax>
 									<p:column headerText="Código" width="70">
 										<h:outputText value="#{p.id}"></h:outputText>						
@@ -26,14 +26,14 @@
 									<p:column headerText="Forma de Pagamento">
 										<h:outputText value="#{p.forma_pagamento}"></h:outputText>						
 									</p:column>
-									<p:column headerText="Valor Total" width="100">
+									<p:column headerText="Valor a Pagar" width="100">
 										<h:outputText value= "#{p.valor_total}"><f:convertNumber type="currency"></f:convertNumber></h:outputText>	
 									</p:column>
 									<p:column headerText="Valor Pago" width="100">
 										<h:outputText value= "#{p.valor_pago}"><f:convertNumber type="currency"></f:convertNumber></h:outputText>	
 									</p:column>
 									<p:column headerText="Status">
-										<h:outputText value= "#{principalbean.status()}"></h:outputText>	
+										<h:outputText value= "#{p.desc_status}"></h:outputText>	
 									</p:column>
 									
 									<p:column width="50">
